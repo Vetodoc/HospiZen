@@ -538,9 +538,22 @@
 
 
                 <button
-                    class="domain-card behavior"
-                    onclick="alert('Domaine Comportement — à construire')"
-                >
+    class="domain-card behavior"
+    onclick="showBehavior()"
+>
+    <div class="domain-icon">
+        🐾
+    </div>
+
+    <div>
+        <h2>Comportement</h2>
+        <p>
+            Observation du comportement et des besoins de l'animal
+        </p>
+    </div>
+
+    <span class="domain-arrow">→</span>
+</button>
 
                     <div class="domain-icon">
                         🐾
@@ -892,11 +905,257 @@
     </button>
 
 </section>
+        <!-- =========================
+     COMPORTEMENT
+========================== -->
+
+<section id="behaviorView" style="display:none;">
+
+    <button
+        class="filter-button"
+        onclick="backToPatient()"
+        style="margin-bottom:25px;"
+    >
+        ← Retour à la fiche
+    </button>
+
+    <header class="header">
+
+        <div>
+            <p class="eyebrow">ÉVALUATION DU BIEN-ÊTRE</p>
+
+            <h1>🐾 Comportement</h1>
+
+            <p class="subtitle">
+                Observez et renseignez le comportement de l'animal.
+            </p>
+        </div>
+
+    </header>
+
+
+    <!-- AGRESSIVITÉ -->
+
+    <div class="behavior-card">
+
+        <div class="behavior-title">
+            <strong>Agressivité</strong>
+        </div>
+
+        <div class="choice-group">
+
+            <button onclick="selectChoice(this)">
+                Aucune
+            </button>
+
+            <button onclick="selectChoice(this)">
+                Méfiant
+            </button>
+
+            <button onclick="selectChoice(this)">
+                Agressif
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- POSITION -->
+
+    <div class="behavior-card">
+
+        <div class="behavior-title">
+            <strong>Position dans la cage</strong>
+        </div>
+
+        <div class="choice-group">
+
+            <button onclick="selectChoice(this)">
+                Couché et détendu
+            </button>
+
+            <button onclick="selectChoice(this)">
+                Debout
+            </button>
+
+            <button onclick="selectChoice(this)">
+                Agité
+            </button>
+
+            <button onclick="selectChoice(this)">
+                Caché ou prostré au fond de la cage
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- PROMENADE -->
+
+    <div class="behavior-card">
+
+        <div class="behavior-title">
+            <strong>En promenade</strong>
+        </div>
+
+        <div class="choice-group">
+
+            <button onclick="selectChoice(this)">
+                Calme
+            </button>
+
+            <button onclick="selectChoice(this)">
+                Craintif
+            </button>
+
+            <button onclick="selectChoice(this)">
+                Refuse de sortir
+            </button>
+
+            <button onclick="selectChoice(this)">
+                Difficulté à se déplacer
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ALIMENTATION -->
+
+    <div class="behavior-card">
+
+        <div class="behavior-title">
+
+            <strong>Mange / boit</strong>
+
+            <span>
+                Sauf contre-indication
+            </span>
+
+        </div>
+
+        <div class="choice-group">
+
+            <button onclick="selectChoice(this)">
+                Oui
+            </button>
+
+            <button onclick="selectChoice(this)">
+                Partiellement
+            </button>
+
+            <button onclick="selectChoice(this)">
+                Non
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- INTERACTION -->
+
+    <div class="behavior-card interaction-card">
+
+        <div class="behavior-title">
+
+            <strong>Interaction avec l'animal</strong>
+
+            <span>
+                Suivi des interactions toutes les 3 heures
+            </span>
+
+        </div>
+
+        <div class="interaction-status">
+
+            <button
+                class="interaction-button"
+                onclick="toggleInteraction(this)"
+            >
+                ✓ Interaction effectuée
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <button
+        class="add-button evaluation-button"
+        onclick="saveBehavior()"
+    >
+        Enregistrer l'observation
+    </button>
+
+</section>
     </main>
 
 </div>
+function showBehavior() {
+
+    document.getElementById("homeView").style.display = "none";
+    document.getElementById("patientView").style.display = "none";
+    document.getElementById("environmentView").style.display = "none";
+    document.getElementById("behaviorView").style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
 
+function backToPatient() {
+
+    document.getElementById("behaviorView").style.display = "none";
+    document.getElementById("patientView").style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function selectChoice(button) {
+
+    const group = button.parentElement;
+
+    group.querySelectorAll("button").forEach(btn => {
+        btn.classList.remove("selected");
+    });
+
+    button.classList.add("selected");
+}
+
+
+function toggleInteraction(button) {
+
+    button.classList.toggle("completed");
+
+}
+
+
+function saveBehavior() {
+
+    const selected = document.querySelectorAll(
+        "#behaviorView .choice-group .selected"
+    );
+
+    if (selected.length === 0) {
+
+        alert("Veuillez renseigner au moins une observation.");
+
+        return;
+    }
+
+    alert("Observation enregistrée.");
+
+}
 <script>
 function showEnvironment() {
 
