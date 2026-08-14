@@ -11,59 +11,65 @@
 
 <body>
 
-    <div class="app">
+<div class="app">
 
-        <!-- SIDEBAR -->
-        <aside class="sidebar">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-            <div class="logo">
-                <div class="logo-mark">🌸</div>
-                <div>
-                    <strong>HospiZen</strong>
-                    <span>Bien-être animal</span>
-                </div>
+        <div class="logo">
+            <div class="logo-mark">🌸</div>
+            <div>
+                <strong>HospiZen</strong>
+                <span>Bien-être animal</span>
             </div>
+        </div>
 
-            <nav>
-                <a href="#" class="nav-item active">
-                    <span>⌂</span>
-                    Accueil
-                </a>
+        <nav>
+            <a href="#" class="nav-item active" onclick="showHome()">
+                <span>⌂</span>
+                Accueil
+            </a>
 
-                <a href="#" class="nav-item">
-                    <span>🐾</span>
-                    Patients
-                </a>
+            <a href="#" class="nav-item">
+                <span>🐾</span>
+                Patients
+            </a>
 
-                <a href="#" class="nav-item">
-                    <span>◷</span>
-                    Planning
-                </a>
+            <a href="#" class="nav-item">
+                <span>◷</span>
+                Planning
+            </a>
 
-                <a href="#" class="nav-item">
-                    <span>◴</span>
-                    Historique
-                </a>
+            <a href="#" class="nav-item">
+                <span>◴</span>
+                Historique
+            </a>
 
-                <a href="#" class="nav-item">
-                    <span>⚙</span>
-                    Paramètres
-                </a>
-            </nav>
+            <a href="#" class="nav-item">
+                <span>⚙</span>
+                Paramètres
+            </a>
+        </nav>
 
-            <div class="user">
-                <div class="avatar">AS</div>
-                <div>
-                    <strong>ASV</strong>
-                    <span>Clinique vétérinaire</span>
-                </div>
+        <div class="user">
+            <div class="avatar">AS</div>
+            <div>
+                <strong>ASV</strong>
+                <span>Clinique vétérinaire</span>
             </div>
+        </div>
 
-        </aside>
+    </aside>
 
 
-        <!-- CONTENU PRINCIPAL -->
-        <main class="main">
+    <!-- CONTENU -->
+    <main class="main">
+
+        <!-- =========================
+             ACCUEIL
+        ========================== -->
+
+        <section id="homeView">
 
             <header class="header">
 
@@ -76,6 +82,7 @@
                 </div>
 
                 <div class="header-actions">
+
                     <button class="notification">
                         ♡
                         <span>2</span>
@@ -84,20 +91,22 @@
                     <button class="add-button">
                         + Nouvel animal
                     </button>
+
                 </div>
 
             </header>
 
 
             <!-- OUTILS -->
+
             <section class="toolbar">
 
                 <div class="search">
                     🔍
                     <input
                         type="text"
-                        placeholder="Rechercher un animal..."
                         id="searchInput"
+                        placeholder="Rechercher un animal..."
                     >
                 </div>
 
@@ -114,12 +123,18 @@
             </section>
 
 
-            <!-- LISTE DES PATIENTS -->
+            <!-- PATIENTS -->
+
             <section class="patients" id="patients">
 
 
                 <!-- MIMINE -->
-                <article class="patient-card" data-name="Mimine">
+
+                <article
+                    class="patient-card"
+                    data-name="Mimine"
+                    onclick="showPatient('Mimine', 'Chat', 'C4', '82', '🐱')"
+                >
 
                     <div class="patient-info">
 
@@ -134,7 +149,6 @@
 
                     </div>
 
-
                     <div class="wellbeing">
 
                         <div class="wellbeing-header">
@@ -143,8 +157,14 @@
                         </div>
 
                         <div class="gauge">
-                            <div class="gauge-fill" style="width: 82%"></div>
-                            <div class="gauge-cursor" style="left: 82%"></div>
+
+                            <div class="gauge-fill"></div>
+
+                            <div
+                                class="gauge-cursor"
+                                style="left: 82%"
+                            ></div>
+
                         </div>
 
                         <div class="gauge-labels">
@@ -161,7 +181,12 @@
 
 
                 <!-- ROCKY -->
-                <article class="patient-card" data-name="Rocky">
+
+                <article
+                    class="patient-card"
+                    data-name="Rocky"
+                    onclick="showPatient('Rocky', 'Chien', 'D2', '48', '🐶')"
+                >
 
                     <div class="patient-info">
 
@@ -176,7 +201,6 @@
 
                     </div>
 
-
                     <div class="wellbeing">
 
                         <div class="wellbeing-header">
@@ -185,8 +209,12 @@
                         </div>
 
                         <div class="gauge">
-                            <div class="gauge-fill" style="width: 48%"></div>
-                            <div class="gauge-cursor" style="left: 48%"></div>
+
+                            <div
+                                class="gauge-cursor"
+                                style="left: 48%"
+                            ></div>
+
                         </div>
 
                         <div class="gauge-labels">
@@ -203,7 +231,12 @@
 
 
                 <!-- COOKIE -->
-                <article class="patient-card" data-name="Cookie">
+
+                <article
+                    class="patient-card"
+                    data-name="Cookie"
+                    onclick="showPatient('Cookie', 'Lapin', 'N1', '64', '🐰')"
+                >
 
                     <div class="patient-info">
 
@@ -218,7 +251,6 @@
 
                     </div>
 
-
                     <div class="wellbeing">
 
                         <div class="wellbeing-header">
@@ -227,8 +259,12 @@
                         </div>
 
                         <div class="gauge">
-                            <div class="gauge-fill" style="width: 64%"></div>
-                            <div class="gauge-cursor" style="left: 64%"></div>
+
+                            <div
+                                class="gauge-cursor"
+                                style="left: 64%"
+                            ></div>
+
                         </div>
 
                         <div class="gauge-labels">
@@ -245,7 +281,12 @@
 
 
                 <!-- NALA -->
-                <article class="patient-card" data-name="Nala">
+
+                <article
+                    class="patient-card"
+                    data-name="Nala"
+                    onclick="showPatient('Nala', 'Chat', 'C2', '91', '🐱')"
+                >
 
                     <div class="patient-info">
 
@@ -260,7 +301,6 @@
 
                     </div>
 
-
                     <div class="wellbeing">
 
                         <div class="wellbeing-header">
@@ -269,8 +309,12 @@
                         </div>
 
                         <div class="gauge">
-                            <div class="gauge-fill" style="width: 91%"></div>
-                            <div class="gauge-cursor" style="left: 91%"></div>
+
+                            <div
+                                class="gauge-cursor"
+                                style="left: 91%"
+                            ></div>
+
                         </div>
 
                         <div class="gauge-labels">
@@ -287,7 +331,12 @@
 
 
                 <!-- TAO -->
-                <article class="patient-card" data-name="Tao">
+
+                <article
+                    class="patient-card"
+                    data-name="Tao"
+                    onclick="showPatient('Tao', 'Chien', 'D1', '36', '🐶')"
+                >
 
                     <div class="patient-info">
 
@@ -302,7 +351,6 @@
 
                     </div>
 
-
                     <div class="wellbeing">
 
                         <div class="wellbeing-header">
@@ -311,8 +359,12 @@
                         </div>
 
                         <div class="gauge">
-                            <div class="gauge-fill" style="width: 36%"></div>
-                            <div class="gauge-cursor" style="left: 36%"></div>
+
+                            <div
+                                class="gauge-cursor"
+                                style="left: 36%"
+                            ></div>
+
                         </div>
 
                         <div class="gauge-labels">
@@ -329,7 +381,12 @@
 
 
                 <!-- LUNA -->
-                <article class="patient-card" data-name="Luna">
+
+                <article
+                    class="patient-card"
+                    data-name="Luna"
+                    onclick="showPatient('Luna', 'Chat', 'C1', '58', '🐱')"
+                >
 
                     <div class="patient-info">
 
@@ -344,7 +401,6 @@
 
                     </div>
 
-
                     <div class="wellbeing">
 
                         <div class="wellbeing-header">
@@ -353,8 +409,12 @@
                         </div>
 
                         <div class="gauge">
-                            <div class="gauge-fill" style="width: 58%"></div>
-                            <div class="gauge-cursor" style="left: 58%"></div>
+
+                            <div
+                                class="gauge-cursor"
+                                style="left: 58%"
+                            ></div>
+
                         </div>
 
                         <div class="gauge-labels">
@@ -371,11 +431,223 @@
 
             </section>
 
-        </main>
+        </section>
 
-    </div>
 
-    <script src="script.js"></script>
+        <!-- =========================
+             FICHE PATIENT
+        ========================== -->
+
+        <section id="patientView" style="display:none;">
+
+            <button
+                class="filter-button"
+                onclick="showHome()"
+                style="margin-bottom:25px;"
+            >
+                ← Retour aux animaux
+            </button>
+
+
+            <header class="header">
+
+                <div>
+
+                    <p class="eyebrow">FICHE PATIENT</p>
+
+                    <h1>
+                        <span id="patientEmoji">🐱</span>
+                        <span id="patientName">Mimine</span>
+                    </h1>
+
+                    <p class="subtitle">
+                        <span id="patientSpecies">Chat</span>
+                        · Cage
+                        <span id="patientCage">C4</span>
+                    </p>
+
+                </div>
+
+            </header>
+
+
+            <!-- JAUGE GLOBALE -->
+
+            <div class="patient-detail-card">
+
+                <div class="detail-title">
+                    <span>Bien-être global</span>
+                    <strong id="patientScore">82 %</strong>
+                </div>
+
+                <div class="gauge detail-gauge">
+
+                    <div
+                        class="gauge-cursor"
+                        id="patientCursor"
+                        style="left:82%"
+                    ></div>
+
+                </div>
+
+                <p class="detail-description">
+                    Cette jauge reflète l'état global de bien-être
+                    observé pour cet animal.
+                </p>
+
+            </div>
+
+
+            <!-- 3 DOMAINES -->
+
+            <div class="domains">
+
+                <button
+                    class="domain-card environment"
+                    onclick="alert('Domaine Cage & environnement — à construire')"
+                >
+
+                    <div class="domain-icon">
+                        🏡
+                    </div>
+
+                    <div>
+                        <h2>Cage & environnement</h2>
+                        <p>
+                            Installation, environnement et besoins essentiels
+                        </p>
+                    </div>
+
+                    <span class="domain-arrow">→</span>
+
+                </button>
+
+
+                <button
+                    class="domain-card behavior"
+                    onclick="alert('Domaine Comportement — à construire')"
+                >
+
+                    <div class="domain-icon">
+                        🐾
+                    </div>
+
+                    <div>
+                        <h2>Comportement</h2>
+                        <p>
+                            Stress, comportement, alimentation et hydratation
+                        </p>
+                    </div>
+
+                    <span class="domain-arrow">→</span>
+
+                </button>
+
+
+                <button
+                    class="domain-card comfort"
+                    onclick="alert('Domaine Confort & accompagnement — à construire')"
+                >
+
+                    <div class="domain-icon">
+                        💜
+                    </div>
+
+                    <div>
+                        <h2>Confort & accompagnement</h2>
+                        <p>
+                            Confort physique, soins et interactions
+                        </p>
+                    </div>
+
+                    <span class="domain-arrow">→</span>
+
+                </button>
+
+            </div>
+
+
+            <!-- BOUTON -->
+
+            <button class="add-button evaluation-button">
+                Évaluer le bien-être
+            </button>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    function showPatient(name, species, cage, score, emoji) {
+
+        document.getElementById("homeView").style.display = "none";
+        document.getElementById("patientView").style.display = "block";
+
+        document.getElementById("patientName").textContent = name;
+        document.getElementById("patientSpecies").textContent = species;
+        document.getElementById("patientCage").textContent = cage;
+        document.getElementById("patientScore").textContent = score + " %";
+        document.getElementById("patientEmoji").textContent = emoji;
+
+        document.getElementById("patientCursor").style.left = score + "%";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    function showHome() {
+
+        document.getElementById("patientView").style.display = "none";
+        document.getElementById("homeView").style.display = "block";
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+
+
+    /* Recherche */
+
+    const searchInput = document.getElementById("searchInput");
+
+    searchInput.addEventListener("input", function () {
+
+        const search = this.value.toLowerCase();
+
+        const cards = document.querySelectorAll(".patient-card");
+
+        let visible = 0;
+
+        cards.forEach(card => {
+
+            const name = card.dataset.name.toLowerCase();
+
+            if (name.includes(search)) {
+
+                card.style.display = "grid";
+                visible++;
+
+            } else {
+
+                card.style.display = "none";
+
+            }
+
+        });
+
+        document.getElementById("patientCount").textContent = visible;
+
+    });
+
+</script>
 
 </body>
 </html>
