@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>HospiZen — Bien-être animal</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="logo">
+                <div class="logo-mark">🌸</div>
+                <div>
+                    <strong>HospiZen</strong>
+                    <span>Bien-être animal</span>
+                </div>
+            </div>
+
+            <nav>
+                <a href="#" class="nav-item active">
+                    <span>⌂</span>
+                    Accueil
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span>🐾</span>
+                    Patients
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span>◷</span>
+                    Planning
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span>◴</span>
+                    Historique
+                </a>
+
+                <a href="#" class="nav-item">
+                    <span>⚙</span>
+                    Paramètres
+                </a>
+            </nav>
+
+            <div class="user">
+                <div class="avatar">AS</div>
+                <div>
+                    <strong>ASV</strong>
+                    <span>Clinique vétérinaire</span>
+                </div>
+            </div>
+
+        </aside>
+
+
+        <!-- CONTENU PRINCIPAL -->
+        <main class="main">
+
+            <header class="header">
+
+                <div>
+                    <p class="eyebrow">HOSPITALISATION</p>
+                    <h1>Animaux hospitalisés</h1>
+                    <p class="subtitle">
+                        Suivez le bien-être de vos patients en un coup d'œil.
+                    </p>
+                </div>
+
+                <div class="header-actions">
+                    <button class="notification">
+                        ♡
+                        <span>2</span>
+                    </button>
+
+                    <button class="add-button">
+                        + Nouvel animal
+                    </button>
+                </div>
+
+            </header>
+
+
+            <!-- OUTILS -->
+            <section class="toolbar">
+
+                <div class="search">
+                    🔍
+                    <input
+                        type="text"
+                        placeholder="Rechercher un animal..."
+                        id="searchInput"
+                    >
+                </div>
+
+                <button class="filter-button">
+                    Filtrer
+                    <span>⌄</span>
+                </button>
+
+                <div class="patient-count">
+                    <strong id="patientCount">6</strong>
+                    animaux hospitalisés
+                </div>
+
+            </section>
+
+
+            <!-- LISTE DES PATIENTS -->
+            <section class="patients" id="patients">
+
+
+                <!-- MIMINE -->
+                <article class="patient-card" data-name="Mimine">
+
+                    <div class="patient-info">
+
+                        <div class="animal-avatar cat">
+                            🐱
+                        </div>
+
+                        <div>
+                            <h2>Mimine</h2>
+                            <p>Chat · Cage C4</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="wellbeing">
+
+                        <div class="wellbeing-header">
+                            <span>Bien-être</span>
+                            <strong>82 %</strong>
+                        </div>
+
+                        <div class="gauge">
+                            <div class="gauge-fill" style="width: 82%"></div>
+                            <div class="gauge-cursor" style="left: 82%"></div>
+                        </div>
+
+                        <div class="gauge-labels">
+                            <span>Prioritaire</span>
+                            <span>Fragile</span>
+                            <span>À surveiller</span>
+                            <span>Bon</span>
+                            <span>Excellent</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- ROCKY -->
+                <article class="patient-card" data-name="Rocky">
+
+                    <div class="patient-info">
+
+                        <div class="animal-avatar dog">
+                            🐶
+                        </div>
+
+                        <div>
+                            <h2>Rocky</h2>
+                            <p>Chien · Cage D2</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="wellbeing">
+
+                        <div class="wellbeing-header">
+                            <span>Bien-être</span>
+                            <strong>48 %</strong>
+                        </div>
+
+                        <div class="gauge">
+                            <div class="gauge-fill" style="width: 48%"></div>
+                            <div class="gauge-cursor" style="left: 48%"></div>
+                        </div>
+
+                        <div class="gauge-labels">
+                            <span>Prioritaire</span>
+                            <span>Fragile</span>
+                            <span>À surveiller</span>
+                            <span>Bon</span>
+                            <span>Excellent</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- COOKIE -->
+                <article class="patient-card" data-name="Cookie">
+
+                    <div class="patient-info">
+
+                        <div class="animal-avatar rabbit">
+                            🐰
+                        </div>
+
+                        <div>
+                            <h2>Cookie</h2>
+                            <p>Lapin · Cage N1</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="wellbeing">
+
+                        <div class="wellbeing-header">
+                            <span>Bien-être</span>
+                            <strong>64 %</strong>
+                        </div>
+
+                        <div class="gauge">
+                            <div class="gauge-fill" style="width: 64%"></div>
+                            <div class="gauge-cursor" style="left: 64%"></div>
+                        </div>
+
+                        <div class="gauge-labels">
+                            <span>Prioritaire</span>
+                            <span>Fragile</span>
+                            <span>À surveiller</span>
+                            <span>Bon</span>
+                            <span>Excellent</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- NALA -->
+                <article class="patient-card" data-name="Nala">
+
+                    <div class="patient-info">
+
+                        <div class="animal-avatar cat">
+                            🐱
+                        </div>
+
+                        <div>
+                            <h2>Nala</h2>
+                            <p>Chat · Cage C2</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="wellbeing">
+
+                        <div class="wellbeing-header">
+                            <span>Bien-être</span>
+                            <strong>91 %</strong>
+                        </div>
+
+                        <div class="gauge">
+                            <div class="gauge-fill" style="width: 91%"></div>
+                            <div class="gauge-cursor" style="left: 91%"></div>
+                        </div>
+
+                        <div class="gauge-labels">
+                            <span>Prioritaire</span>
+                            <span>Fragile</span>
+                            <span>À surveiller</span>
+                            <span>Bon</span>
+                            <span>Excellent</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- TAO -->
+                <article class="patient-card" data-name="Tao">
+
+                    <div class="patient-info">
+
+                        <div class="animal-avatar dog">
+                            🐶
+                        </div>
+
+                        <div>
+                            <h2>Tao</h2>
+                            <p>Chien · Cage D1</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="wellbeing">
+
+                        <div class="wellbeing-header">
+                            <span>Bien-être</span>
+                            <strong>36 %</strong>
+                        </div>
+
+                        <div class="gauge">
+                            <div class="gauge-fill" style="width: 36%"></div>
+                            <div class="gauge-cursor" style="left: 36%"></div>
+                        </div>
+
+                        <div class="gauge-labels">
+                            <span>Prioritaire</span>
+                            <span>Fragile</span>
+                            <span>À surveiller</span>
+                            <span>Bon</span>
+                            <span>Excellent</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- LUNA -->
+                <article class="patient-card" data-name="Luna">
+
+                    <div class="patient-info">
+
+                        <div class="animal-avatar cat">
+                            🐱
+                        </div>
+
+                        <div>
+                            <h2>Luna</h2>
+                            <p>Chat · Cage C1</p>
+                        </div>
+
+                    </div>
+
+
+                    <div class="wellbeing">
+
+                        <div class="wellbeing-header">
+                            <span>Bien-être</span>
+                            <strong>58 %</strong>
+                        </div>
+
+                        <div class="gauge">
+                            <div class="gauge-fill" style="width: 58%"></div>
+                            <div class="gauge-cursor" style="left: 58%"></div>
+                        </div>
+
+                        <div class="gauge-labels">
+                            <span>Prioritaire</span>
+                            <span>Fragile</span>
+                            <span>À surveiller</span>
+                            <span>Bon</span>
+                            <span>Excellent</span>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
