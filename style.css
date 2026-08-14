@@ -852,3 +852,78 @@ h1 {
 .patient-detail-card {
     width: 100%;
 }
+/* ==============================
+   COMPORTEMENT
+============================== */
+
+.behavior-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 12px;
+}
+
+.behavior-title {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.behavior-title strong {
+    font-size: 15px;
+}
+
+.behavior-title span {
+    font-size: 12px;
+    color: var(--text-soft);
+}
+
+.choice-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.choice-group button {
+    border: 1px solid var(--border);
+    background: #faf9fc;
+    color: var(--text);
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s ease;
+}
+
+.choice-group button:hover {
+    transform: translateY(-1px);
+}
+
+.choice-group button.selected {
+    background: #eee8ff;
+    border-color: #b9a5ed;
+    color: #6748a8;
+    font-weight: 600;
+}
+
+.interaction-status {
+    display: flex;
+}
+
+.interaction-button {
+    border: 1px solid var(--border);
+    background: #faf9fc;
+    color: var(--text);
+    border-radius: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.interaction-button.completed {
+    background: #e5f6eb;
+    border-color: #9bd5ae;
+    color: #3b9b5d;
+    font-weight: 600;
+}
