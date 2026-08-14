@@ -658,3 +658,145 @@ h1 {
         font-size: 8px;
     }
 }
+/* ==============================
+   CHECKLIST ENVIRONNEMENT
+============================== */
+
+.checklist {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.check-item {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 17px 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.check-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.check-content strong {
+    font-size: 14px;
+}
+
+.check-content span {
+    color: var(--text-soft);
+    font-size: 12px;
+}
+
+.status-buttons {
+    display: flex;
+    gap: 7px;
+    flex-shrink: 0;
+}
+
+.status-buttons button {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: #faf9fc;
+    color: var(--text-soft);
+    cursor: pointer;
+    font-weight: 700;
+    transition: 0.2s ease;
+}
+
+.status-buttons button:hover {
+    transform: translateY(-1px);
+}
+
+.status-buttons .status-ok {
+    background: #e5f6eb;
+    border-color: #9bd5ae;
+    color: #3b9b5d;
+}
+
+.status-buttons .status-warning {
+    background: #fff2dc;
+    border-color: #f0c27a;
+    color: #d48725;
+}
+
+.status-buttons .status-na {
+    background: #eeeef2;
+    border-color: #d4d3db;
+    color: #777681;
+}
+
+.status-legend {
+    display: flex;
+    gap: 22px;
+    margin-top: 18px;
+    color: var(--text-soft);
+    font-size: 12px;
+}
+
+.status-legend span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.status-legend b {
+    width: 23px;
+    height: 23px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.legend-ok {
+    background: #e5f6eb;
+    color: #3b9b5d;
+}
+
+.legend-warning {
+    background: #fff2dc;
+    color: #d48725;
+}
+
+.legend-na {
+    background: #eeeef2;
+    color: #777681;
+}
+
+.environment-summary {
+    margin-bottom: 18px;
+}
+
+.evaluation-button {
+    margin-top: 24px;
+}
+
+@media (max-width: 700px) {
+
+    .check-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .status-buttons {
+        width: 100%;
+    }
+
+    .status-buttons button {
+        flex: 1;
+    }
+
+    .status-legend {
+        flex-wrap: wrap;
+    }
+}
