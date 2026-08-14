@@ -1,0 +1,660 @@
+/* ==============================
+   HOSPIZEN — DESIGN
+   ============================== */
+
+:root {
+    --primary: #7c63d9;
+    --primary-light: #eee9ff;
+    --text: #27243a;
+    --text-soft: #77748a;
+    --background: #f8f7fc;
+    --white: #ffffff;
+    --border: #ebe8f3;
+    --shadow: 0 8px 30px rgba(72, 55, 130, 0.07);
+
+    --green: #54b978;
+    --yellow: #f4c94c;
+    --orange: #f39a43;
+    --red: #e85c5c;
+}
+
+
+/* ==============================
+   RESET
+   ============================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: var(--background);
+    color: var(--text);
+}
+
+button,
+input {
+    font: inherit;
+}
+
+
+/* ==============================
+   APPLICATION
+   ============================== */
+
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* ==============================
+   SIDEBAR
+   ============================== */
+
+.sidebar {
+    width: 245px;
+    min-height: 100vh;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 28px 18px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 4px 10px 35px;
+}
+
+.logo-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.logo strong {
+    display: block;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+}
+
+.logo span {
+    display: block;
+    color: var(--text-soft);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: var(--text-soft);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 13px 15px;
+    border-radius: 13px;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
+.nav-item span {
+    width: 22px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.nav-item:hover {
+    background: #f7f4ff;
+    color: var(--primary);
+}
+
+.nav-item.active {
+    background: var(--primary-light);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.user {
+    margin-top: auto;
+    padding: 16px 10px 5px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #e8ddff;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.user strong {
+    display: block;
+    font-size: 13px;
+}
+
+.user span {
+    display: block;
+    color: var(--text-soft);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+
+/* ==============================
+   CONTENU PRINCIPAL
+   ============================== */
+
+.main {
+    margin-left: 245px;
+    width: calc(100% - 245px);
+    padding: 42px 48px 60px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 32px;
+}
+
+.eyebrow {
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+}
+
+h1 {
+    font-size: 32px;
+    letter-spacing: -1px;
+    line-height: 1.15;
+}
+
+.subtitle {
+    color: var(--text-soft);
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.notification {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border);
+    background: var(--white);
+    border-radius: 13px;
+    cursor: pointer;
+    color: var(--primary);
+    position: relative;
+}
+
+.notification span {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--red);
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-button {
+    border: none;
+    background: var(--primary);
+    color: white;
+    border-radius: 13px;
+    padding: 13px 18px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 7px 18px rgba(124, 99, 217, 0.22);
+}
+
+.add-button:hover {
+    transform: translateY(-1px);
+}
+
+
+/* ==============================
+   BARRE D'OUTILS
+   ============================== */
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.search {
+    height: 48px;
+    flex: 1;
+    max-width: 470px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 15px;
+    color: var(--text-soft);
+}
+
+.search input {
+    border: none;
+    outline: none;
+    width: 100%;
+    background: transparent;
+    color: var(--text);
+}
+
+.search input::placeholder {
+    color: #aaa7b6;
+}
+
+.filter-button {
+    height: 48px;
+    padding: 0 17px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    color: var(--text);
+    cursor: pointer;
+}
+
+.filter-button span {
+    margin-left: 25px;
+}
+
+.patient-count {
+    margin-left: auto;
+    color: var(--text-soft);
+    font-size: 13px;
+}
+
+.patient-count strong {
+    color: var(--primary);
+    font-size: 20px;
+    margin-right: 4px;
+}
+
+
+/* ==============================
+   CARTES PATIENTS
+   ============================== */
+
+.patients {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.patient-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 19px;
+    padding: 20px 23px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 35px;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.patient-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 35px rgba(72, 55, 130, 0.11);
+    border-color: #ded6f5;
+}
+
+.patient-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.animal-avatar {
+    width: 58px;
+    height: 58px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.animal-avatar.cat {
+    background: #f0eaff;
+}
+
+.animal-avatar.dog {
+    background: #fff0e3;
+}
+
+.animal-avatar.rabbit {
+    background: #eaf8ef;
+}
+
+.patient-info h2 {
+    font-size: 19px;
+    letter-spacing: -0.3px;
+}
+
+.patient-info p {
+    color: var(--text-soft);
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+
+/* ==============================
+   JAUGE DE BIEN-ÊTRE
+   ============================== */
+
+.wellbeing {
+    width: 100%;
+}
+
+.wellbeing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 11px;
+}
+
+.wellbeing-header span {
+    color: var(--text-soft);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.wellbeing-header strong {
+    font-size: 18px;
+}
+
+
+/*
+   La jauge possède un dégradé continu.
+   Rouge → orange → jaune → vert
+*/
+
+.gauge {
+    height: 17px;
+    width: 100%;
+    border-radius: 999px;
+    position: relative;
+
+    background:
+        linear-gradient(
+            90deg,
+            #e94d4d 0%,
+            #f4773c 25%,
+            #f5c842 50%,
+            #a9d83e 72%,
+            #42ad69 100%
+        );
+
+    box-shadow:
+        inset 0 1px 2px rgba(0, 0, 0, 0.08),
+        0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+
+/*
+   Curseur positionné selon le pourcentage.
+*/
+
+.gauge-cursor {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 25px;
+    height: 25px;
+
+    background: white;
+    border: 4px solid var(--text);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.18);
+
+    z-index: 2;
+}
+
+
+/*
+   Petit repère vertical sous le curseur
+*/
+
+.gauge-cursor::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 9px;
+    background: white;
+    left: 50%;
+    top: 21px;
+    transform: translateX(-50%);
+}
+
+
+/*
+   Labels de la jauge
+*/
+
+.gauge-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 9px;
+    font-size: 10px;
+    color: var(--text-soft);
+}
+
+.gauge-labels span:first-child {
+    color: var(--red);
+}
+
+.gauge-labels span:last-child {
+    color: var(--green);
+}
+
+
+/* ==============================
+   RESPONSIVE TABLETTE
+   ============================== */
+
+@media (max-width: 1000px) {
+
+    .sidebar {
+        width: 80px;
+        padding: 25px 12px;
+    }
+
+    .logo {
+        justify-content: center;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .logo > div:last-child,
+    .nav-item:not(.active)::after,
+    .nav-item {
+        font-size: 0;
+    }
+
+    .nav-item {
+        justify-content: center;
+        padding: 13px;
+    }
+
+    .nav-item span {
+        font-size: 19px;
+    }
+
+    .logo strong {
+        display: none;
+    }
+
+    .logo span {
+        display: none;
+    }
+
+    .user {
+        justify-content: center;
+    }
+
+    .user > div:last-child {
+        display: none;
+    }
+
+    .main {
+        margin-left: 80px;
+        width: calc(100% - 80px);
+        padding: 35px 28px;
+    }
+
+    .patient-card {
+        grid-template-columns: 180px 1fr;
+    }
+}
+
+
+/* ==============================
+   RESPONSIVE MOBILE
+   ============================== */
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        position: fixed;
+        width: 100%;
+        min-height: auto;
+        height: 68px;
+        bottom: 0;
+        top: auto;
+        left: 0;
+        z-index: 20;
+        border-right: none;
+        border-top: 1px solid var(--border);
+        padding: 6px 10px;
+    }
+
+    .logo,
+    .user {
+        display: none;
+    }
+
+    nav {
+        flex-direction: row;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .nav-item,
+    .nav-item.active {
+        flex: 1;
+        padding: 9px;
+        background: transparent;
+        justify-content: center;
+    }
+
+    .nav-item span {
+        font-size: 20px;
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+        padding: 25px 16px 90px;
+    }
+
+    .header {
+        flex-direction: column;
+    }
+
+    h1 {
+        font-size: 27px;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .add-button {
+        flex: 1;
+    }
+
+    .toolbar {
+        flex-wrap: wrap;
+    }
+
+    .search {
+        max-width: none;
+        width: 100%;
+    }
+
+    .patient-count {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .patient-card {
+        grid-template-columns: 1fr;
+        gap: 18px;
+        padding: 18px;
+    }
+
+    .patient-info {
+        gap: 13px;
+    }
+
+    .gauge-labels {
+        font-size: 8px;
+    }
+}
