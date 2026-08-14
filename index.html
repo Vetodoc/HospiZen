@@ -503,8 +503,22 @@
             <div class="domains">
 
                 <button
-                    class="domain-card environment"
-                    onclick="alert('Domaine Cage & environnement — à construire')"
+    class="domain-card environment"
+    onclick="showEnvironment()"
+>
+    <div class="domain-icon">
+        🏡
+    </div>
+
+    <div>
+        <h2>Cage & environnement</h2>
+        <p>
+            Installation, environnement et besoins essentiels
+        </p>
+    </div>
+
+    <span class="domain-arrow">→</span>
+</button>
                 >
 
                     <div class="domain-icon">
@@ -579,9 +593,373 @@
 
 </div>
 
+<!-- =========================
+     CAGE & ENVIRONNEMENT
+========================== -->
 
+<section id="environmentView" style="display:none;">
+
+    <button
+        class="filter-button"
+        onclick="showPatient(
+            document.getElementById('patientName').textContent,
+            document.getElementById('patientSpecies').textContent,
+            document.getElementById('patientCage').textContent,
+            document.getElementById('patientScore').textContent.replace('%',''),
+            document.getElementById('patientEmoji').textContent
+        )"
+        style="margin-bottom:25px;"
+    >
+        ← Retour à la fiche
+    </button>
+
+    <header class="header">
+
+        <div>
+            <p class="eyebrow">ÉVALUATION DU BIEN-ÊTRE</p>
+
+            <h1>🏡 Cage & environnement</h1>
+
+            <p class="subtitle">
+                Vérifiez que l'environnement répond aux besoins de l'animal.
+            </p>
+        </div>
+
+    </header>
+
+
+    <!-- STATUT GLOBAL DU DOMAINE -->
+
+    <div class="patient-detail-card environment-summary">
+
+        <div class="detail-title">
+            <span>État de l'environnement</span>
+            <strong id="environmentScore">À évaluer</strong>
+        </div>
+
+        <p class="detail-description">
+            Sélectionnez le statut correspondant à chaque élément.
+        </p>
+
+    </div>
+
+
+    <!-- LISTE DES ÉLÉMENTS -->
+
+    <div class="checklist">
+
+
+        <!-- CAGE -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Cage adaptée</strong>
+                <span>Adaptée à l'espèce et à la taille de l'animal</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- COUVERTURE -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Couverture / plaid</strong>
+                <span>Présent et adapté aux besoins de l'animal</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- LITIERE -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Litière / alèse</strong>
+                <span>Présente, propre et adaptée</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- CACHETTE -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Cachette pour chat</strong>
+                <span>Présente lorsque nécessaire</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- PHEROMONES -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Phéromones / spray adapté</strong>
+                <span>Mis en place lorsque nécessaire</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- DIFFUSEUR -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Prise diffuseur pour chat</strong>
+                <span>Présente lorsque nécessaire</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- EAU -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Eau disponible</strong>
+                <span>Sauf contre-indication</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- NOURRITURE -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Nourriture disponible</strong>
+                <span>Sauf contre-indication</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- ENVIRONNEMENT CALME -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Environnement calme</strong>
+                <span>Ambiance adaptée au repos de l'animal</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- TEMPERATURE -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Température de la pièce contrôlée</strong>
+                <span>Température adaptée aux besoins de l'animal</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- AFFAIRES PERSONNELLES -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Affaires personnelles</strong>
+                <span>Présentes lorsque disponibles et adaptées</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+
+        <!-- JOUETS -->
+
+        <div class="check-item">
+
+            <div class="check-content">
+                <strong>Jouets / herbe à chat</strong>
+                <span>Présents lorsque adaptés à l'animal</span>
+            </div>
+
+            <div class="status-buttons">
+                <button onclick="setStatus(this, 'ok')">✓</button>
+                <button onclick="setStatus(this, 'warning')">!</button>
+                <button onclick="setStatus(this, 'na')">—</button>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- LEGENDE -->
+
+    <div class="status-legend">
+
+        <span>
+            <b class="legend-ok">✓</b>
+            Conforme
+        </span>
+
+        <span>
+            <b class="legend-warning">!</b>
+            À vérifier
+        </span>
+
+        <span>
+            <b class="legend-na">—</b>
+            Non concerné
+        </span>
+
+    </div>
+
+
+    <button
+        class="add-button evaluation-button"
+        onclick="saveEnvironment()"
+    >
+        Enregistrer l'évaluation
+    </button>
+
+</section>
 <script>
+function showEnvironment() {
 
+    document.getElementById("homeView").style.display = "none";
+    document.getElementById("patientView").style.display = "none";
+    document.getElementById("environmentView").style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function setStatus(button, status) {
+
+    const parent = button.parentElement;
+
+    parent.querySelectorAll("button").forEach(btn => {
+        btn.classList.remove("selected");
+        btn.classList.remove("status-ok");
+        btn.classList.remove("status-warning");
+        btn.classList.remove("status-na");
+    });
+
+    button.classList.add("selected");
+
+    if (status === "ok") {
+        button.classList.add("status-ok");
+    }
+
+    if (status === "warning") {
+        button.classList.add("status-warning");
+    }
+
+    if (status === "na") {
+        button.classList.add("status-na");
+    }
+}
+
+
+function saveEnvironment() {
+
+    const selected = document.querySelectorAll(
+        "#environmentView .status-buttons .selected"
+    );
+
+    const total = document.querySelectorAll(
+        "#environmentView .check-item"
+    ).length;
+
+    if (selected.length === 0) {
+
+        alert("Veuillez évaluer au moins un élément.");
+
+        return;
+    }
+
+    document.getElementById("environmentScore").textContent =
+        selected.length + " / " + total + " évalués";
+
+    alert("Évaluation enregistrée.");
+}
     function showPatient(name, species, cage, score, emoji) {
 
         document.getElementById("homeView").style.display = "none";
