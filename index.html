@@ -1089,7 +1089,10 @@
                 <span>Interaction avec l'animal</span>
             </div>
 
-            <button class="planning-status">
+            <button
+    class="planning-status"
+    onclick="togglePlanningStatus(this)"
+>
                 À faire
             </button>
 
@@ -1354,7 +1357,17 @@ function showPlanning() {
         behavior: "smooth"
     });
 }
-</script>
+function togglePlanningStatus(button) {
+
+    if (button.textContent.trim() === "À faire") {
+        button.textContent = "✓ Terminé";
+        button.classList.add("completed");
+    } else {
+        button.textContent = "À faire";
+        button.classList.remove("completed");
+    }
+}
+    </script>
 
 </body>
 </html>
