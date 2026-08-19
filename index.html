@@ -773,83 +773,7 @@
         </div>
 
     </header>
-
-    <div class="planning-list">
-
-        <div class="planning-item">
-
-            <div class="planning-time">
-                <strong>09:00</strong>
-            </div>
-
-            <div class="planning-content">
-                <strong>Mimine</strong>
-                <span>Interaction avec l'animal</span>
-            </div>
-
-            <button
-    class="planning-status"
-    onclick="togglePlanningStatus(this)"
->
-                À faire
-            </button>
-
-        </div>
-
-        <div class="planning-item">
-
-            <div class="planning-time">
-                <strong>10:00</strong>
-            </div>
-
-            <div class="planning-content">
-                <strong>Rocky</strong>
-                <span>Promenade</span>
-            </div>
-
-            <button class="planning-status">
-                À faire
-            </button>
-
-        </div>
-
-        <div class="planning-item">
-
-            <div class="planning-time">
-                <strong>11:00</strong>
-            </div>
-
-            <div class="planning-content">
-                <strong>Cookie</strong>
-                <span>Observation du comportement</span>
-            </div>
-
-            <button class="planning-status">
-                À faire
-            </button>
-
-        </div>
-
-        <div class="planning-item">
-
-            <div class="planning-time">
-                <strong>12:00</strong>
-            </div>
-
-            <div class="planning-content">
-                <strong>Nala</strong>
-                <span>Interaction avec l'animal</span>
-            </div>
-
-            <button class="planning-status">
-                À faire
-            </button>
-
-        </div>
-
-    </div>
-
-</section>
+<div class="planning-list" id="dynamicPlanning"></div>
     </main>
 
 </div>
@@ -966,6 +890,44 @@
 }
 
 generateAnimalCards();
+            function generatePlanning() {
+        const container = document.getElementById("dynamicPlanning");
+
+        const actions = [
+            "Interaction avec l'animal",
+            "Promenade",
+            "Observation du comportement",
+            "Interaction avec l'animal",
+            "Soins",
+            "Observation générale"
+        ];
+
+        container.innerHTML = animals.map((animal, index) => {
+            return `
+                <div class="planning-item">
+
+                    <div class="planning-time">
+                        <strong>${String(9 + index).padStart(2, "0")}:00</strong>
+                    </div>
+
+                    <div class="planning-content">
+                        <strong>${animal.name}</strong>
+                        <span>${actions[index % actions.length]}</span>
+                    </div>
+
+                    <button
+                        class="planning-status"
+                        onclick="togglePlanningStatus(this)"
+                    >
+                        À faire
+                    </button>
+
+                </div>
+            `;
+        }).join("");
+    }
+
+    generatePlanning();
 function showBehavior() {
 
     document.getElementById("homeView").style.display = "none";
