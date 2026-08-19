@@ -768,7 +768,32 @@
 
     </header>
 <div class="planning-list" id="dynamicPlanning"></div>
+    <section id="historyView" style="display:none;">
+
+    <header class="header">
+        <div>
+            <p class="eyebrow">SUIVI</p>
+            <h1>Historique</h1>
+            <p class="subtitle">
+                Retrouvez les évaluations réalisées pour vos animaux hospitalisés.
+            </p>
+        </div>
+    </header>
+
+    <div id="historyList" class="planning-list">
+        <div class="planning-item">
+            <div class="planning-content">
+                <strong>Aucune évaluation enregistrée</strong>
+                <span>
+                    Les évaluations réalisées apparaîtront ici.
+                </span>
+            </div>
+        </div>
+    </div>
+
+</section>
     </main>
+
 
 </div>
     <script>
@@ -1169,6 +1194,20 @@ function showPlanning() {
     document.getElementById("behaviorView").style.display = "none";
 
     document.getElementById("planningView").style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+        function showHistory() {
+    document.getElementById("homeView").style.display = "none";
+    document.getElementById("patientView").style.display = "none";
+    document.getElementById("environmentView").style.display = "none";
+    document.getElementById("behaviorView").style.display = "none";
+    document.getElementById("planningView").style.display = "none";
+
+    document.getElementById("historyView").style.display = "block";
 
     window.scrollTo({
         top: 0,
