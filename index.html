@@ -35,12 +35,12 @@
                 Patients
             </a>
 
-            <a href="#" class="nav-item">
-                <span>◷</span>
-                Planning
+           <a href="#" class="nav-item" onclick="showPlanning(); return false;">
+    <span>◷</span>
+    Planning
             </a>
-
-            <a href="#" class="nav-item">
+            
+       <a href="#" class="nav-item">
                 <span>◴</span>
                 Historique
             </a>
@@ -1056,6 +1056,99 @@
     </button>
 
 </section>
+        <!-- =========================
+     PLANNING
+========================== -->
+
+<section id="planningView" style="display:none;">
+
+    <header class="header">
+
+        <div>
+            <p class="eyebrow">ORGANISATION</p>
+
+            <h1>Planning</h1>
+
+            <p class="subtitle">
+                Suivez les actions à réaliser auprès de vos animaux hospitalisés.
+            </p>
+        </div>
+
+    </header>
+
+    <div class="planning-list">
+
+        <div class="planning-item">
+
+            <div class="planning-time">
+                <strong>09:00</strong>
+            </div>
+
+            <div class="planning-content">
+                <strong>Mimine</strong>
+                <span>Interaction avec l'animal</span>
+            </div>
+
+            <button class="planning-status">
+                À faire
+            </button>
+
+        </div>
+
+        <div class="planning-item">
+
+            <div class="planning-time">
+                <strong>10:00</strong>
+            </div>
+
+            <div class="planning-content">
+                <strong>Rocky</strong>
+                <span>Promenade</span>
+            </div>
+
+            <button class="planning-status">
+                À faire
+            </button>
+
+        </div>
+
+        <div class="planning-item">
+
+            <div class="planning-time">
+                <strong>11:00</strong>
+            </div>
+
+            <div class="planning-content">
+                <strong>Cookie</strong>
+                <span>Observation du comportement</span>
+            </div>
+
+            <button class="planning-status">
+                À faire
+            </button>
+
+        </div>
+
+        <div class="planning-item">
+
+            <div class="planning-time">
+                <strong>12:00</strong>
+            </div>
+
+            <div class="planning-content">
+                <strong>Nala</strong>
+                <span>Interaction avec l'animal</span>
+            </div>
+
+            <button class="planning-status">
+                À faire
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
     </main>
 
 </div>
@@ -1247,7 +1340,20 @@ function saveEnvironment() {
         document.getElementById("patientCount").textContent = visible;
 
     });
+function showPlanning() {
 
+    document.getElementById("homeView").style.display = "none";
+    document.getElementById("patientView").style.display = "none";
+    document.getElementById("environmentView").style.display = "none";
+    document.getElementById("behaviorView").style.display = "none";
+
+    document.getElementById("planningView").style.display = "block";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 </script>
 
 </body>
