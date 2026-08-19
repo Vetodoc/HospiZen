@@ -778,6 +778,7 @@
 
 </div>
     <script>
+        let currentAnimalId = null;
         const animals = [
     {
         id: 1,
@@ -842,7 +843,7 @@
             <article
                 class="patient-card"
                 data-name="${animal.name}"
-                onclick="showPatient('${animal.name}', '${animal.species}', '${animal.cage}', '${animal.score}', '${animal.emoji}')"
+              onclick="showPatientById(${animal.id})"
             >
 
                 <div class="patient-info">
@@ -1051,23 +1052,32 @@ function saveEnvironment() {
 
     alert("Évaluation enregistrée.");
 }
-    function showPatient(name, species, cage, score, emoji) {
+   function showPatientById(id) {
 
-        document.getElementById("homeView").style.display = "none";
-        document.getElementById("patientView").style.display = "block";
+    const animal = animals.find(a => a.id === id);
 
-        document.getElementById("patientName").textContent = name;
-        document.getElementById("patientSpecies").textContent = species;
-        document.getElementById("patientCage").textContent = cage;
-        document.getElementById("patientScore").textContent = score + " %";
-        document.getElementById("patientEmoji").textContent = emoji;
+    if (!animal) return;
 
-        document.getElementById("patientCursor").style.left = score + "%";
+    currentAnimalId = id;
 
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
+    document.getElementById("homeView").style.display = "none";
+    document.getElementById("patientView").style.display = "block";
+    document.getElementById("environmentView").style.display = "none";
+    document.getElementById("behaviorView").style.display = "none";
+
+    document.getElementById("patientName").textContent = animal.name;
+    document.getElementById("patientSpecies").textContent = animal.species;
+    document.getElementById("patientCage").textContent = animal.cage;
+    document.getElementById("patientScore").textContent = animal.score + " %";
+    document.getElementById("patientEmoji").textContent = animal.emoji;
+
+    document.getElementById("patientCursor").style.left = animal.score + "%";
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
     }
 
 
