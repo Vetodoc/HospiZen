@@ -251,13 +251,7 @@
 
     <button
         class="filter-button"
-        onclick="showPatient(
-            document.getElementById('patientName').textContent,
-            document.getElementById('patientSpecies').textContent,
-            document.getElementById('patientCage').textContent,
-            document.getElementById('patientScore').textContent.replace('%',''),
-            document.getElementById('patientEmoji').textContent
-        )"
+        onclick="showPatientById(currentAnimalId)"
         style="margin-bottom:25px;"
     >
         ← Retour à la fiche
@@ -964,6 +958,7 @@ function selectChoice(button) {
     });
 
     button.classList.add("selected");
+        updateAnimalScore();
 }
 
 
@@ -983,12 +978,55 @@ function saveBehavior() {
     if (selected.length === 0) {
 
         alert("Veuillez renseigner au moins une observation.");
-
+        
         return;
     }
 
     alert("Observation enregistrée.");
+}
+function updateAnimalScore() {
 
+    const animal = animals.find(a => a.id === currentAnimalId);
+
+    if (!animal) return;
+
+    const selected = document.querySelectorAll(
+        "#behaviorView .choice-group .selected"
+    );
+
+    if (selected.length === 0) return;
+
+    let total = 0;
+
+    selected.forEach(button => {
+
+        const value = button.textContent.trim();
+
+        if (
+            value === "Calme" ||
+            value === "Aucune" ||
+            value === "Couché et détendu" ||
+            value === "Oui"
+        ) {
+            total += 100;
+        } else if (
+            value === "Stressé" ||
+            value === "Méfiant" ||
+            value === "Debout" ||
+            value === "Craintif" ||
+            value === "Partiellement"
+        ) {
+            total += 50;
+        }
+    });
+
+    animal.score = Math.round(total / selected.length);
+
+    document.getElementById("patientScore").textContent =
+        animal.score + " %";
+
+    document.getElementById("patientCursor").style.left =
+        animal.score + "%";
 }
 function showEnvironment() {
 
@@ -1078,8 +1116,6 @@ function saveEnvironment() {
         behavior: "smooth"
     });
 }
-    }
-
 
     function showHome() {
 
