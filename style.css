@@ -926,4 +926,80 @@ h1 {
     border-color: #9bd5ae;
     color: #3b9b5d;
     font-weight: 600;
+} /* =========================
+   PLANNING
+========================= */
+
+.planning-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 30px;
+}
+
+.planning-item {
+    display: grid;
+    grid-template-columns: 90px 1fr auto;
+    align-items: center;
+    gap: 20px;
+
+    background: #ffffff;
+    border: 1px solid #eeeaf8;
+    border-radius: 16px;
+    padding: 18px 22px;
+
+    box-shadow: 0 4px 14px rgba(60, 45, 100, 0.05);
+}
+
+.planning-time {
+    font-size: 18px;
+    font-weight: 700;
+    color: #7656d6;
+}
+
+.planning-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.planning-content strong {
+    font-size: 16px;
+    color: #17203a;
+}
+
+.planning-content span {
+    font-size: 14px;
+    color: #77738a;
+}
+
+.planning-status {
+    border: none;
+    border-radius: 10px;
+    padding: 9px 16px;
+
+    background: #f1edff;
+    color: #7656d6;
+
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.planning-status:hover {
+    background: #e7e0ff;
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+
+    .planning-item {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .planning-status {
+        width: fit-content;
+    }
+
 }
