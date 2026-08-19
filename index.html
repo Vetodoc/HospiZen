@@ -781,17 +781,7 @@
         </div>
     </header>
 
-    <div id="historyList" class="planning-list">
-        <div class="planning-item">
-            <div class="planning-content">
-                <strong>Aucune évaluation enregistrée</strong>
-                <span>
-                    Les évaluations réalisées apparaîtront ici.
-                </span>
-            </div>
-        </div>
-    </div>
-
+    <div id="historyList" class="planning-list"></div>
 </section>
     </main>
 
@@ -1053,6 +1043,19 @@ function updateAnimalScore() {
 
     document.getElementById("patientCursor").style.left =
         animal.score + "%";
+    const evaluation = {
+    animalId: animal.id,
+    animalName: animal.name,
+    score: animal.score,
+    observations: Array.from(selected).map(button => button.textContent.trim()),
+    date: new Date().toLocaleString("fr-FR")
+};
+
+const history = JSON.parse(localStorage.getItem("evaluations") || "[]");
+
+history.unshift(evaluation);
+
+localStorage.setItem("evaluations", JSON.stringify(history));
 }
 function showEnvironment() {
 
@@ -1201,6 +1204,46 @@ function showPlanning() {
         behavior: "smooth"
     });
 }
+        function renderHistory() {
+    const historyList = document.getElementById("historyList");
+
+    const history = JSON.parse(
+        localStorage.getItem("evaluations") || "[]"
+    );
+
+    if (history.length === 0) {
+        historyList.innerHTML = `
+            <div class="planning-item">
+                <div class="planning-content">
+                    <strong>Aucune évaluation enregistrée</strong>
+                    <span>
+                        Les évaluations réalisées apparaîtront ici.
+                    </span>
+                </div>
+            </div>
+        `;
+        return;
+    }
+
+    historyList.innerHTML = "";
+
+    history.forEach(evaluation => {
+        const item = document.createElement("div");
+        item.className = "planning-item";
+
+        item.innerHTML = `
+            <div class="planning-content">
+                <strong>${evaluation.animalName}</strong>
+                <span>
+                    Score : ${evaluation.score}%<br>
+                    Date : ${evaluation.date}
+                </span>
+            </div>
+        `;
+
+        historyList.appendChild(item);
+    });
+}
         function showHistory() {
     document.getElementById("homeView").style.display = "none";
     document.getElementById("patientView").style.display = "none";
@@ -1209,6 +1252,7 @@ function showPlanning() {
     document.getElementById("planningView").style.display = "none";
 
     document.getElementById("historyView").style.display = "block";
+            renderHistory();
 
     window.scrollTo({
         top: 0,
