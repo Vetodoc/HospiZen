@@ -1064,8 +1064,13 @@ function updateAnimalScore() {
         animal.score + " %";
 
     document.getElementById("patientCursor").style.left =
-        animal.score + "%";
-  
+    animal.score + "%";
+
+localStorage.setItem(
+    "animalScore_" + animal.id,
+    animal.score
+);
+
 }
 function showEnvironment() {
 
@@ -1134,7 +1139,11 @@ function saveEnvironment() {
     const animal = animals.find(a => a.id === id);
 
     if (!animal) return;
+    const savedScore = localStorage.getItem("animalScore_" + animal.id);
 
+    if (savedScore !== null) {
+        animal.score = Number(savedScore);
+    }
     currentAnimalId = id;
 
     document.getElementById("homeView").style.display = "none";
