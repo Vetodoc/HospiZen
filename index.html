@@ -1174,15 +1174,24 @@ function saveEnvironment() {
 
     function showHome() {
 
-        document.getElementById("patientView").style.display = "none";
-        document.getElementById("homeView").style.display = "block";
-generateAnimalCards();
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    }
+    animals.forEach(animal => {
+        const savedScore = localStorage.getItem("animalScore_" + animal.id);
 
+        if (savedScore !== null) {
+            animal.score = Number(savedScore);
+        }
+    });
+
+    document.getElementById("patientView").style.display = "none";
+    document.getElementById("homeView").style.display = "block";
+
+    generateAnimalCards();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 
     /* Recherche */
 
