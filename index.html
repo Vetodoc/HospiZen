@@ -839,6 +839,13 @@
         score: 0
     }
 ];
+        animals.forEach(animal => {
+    const savedScore = localStorage.getItem("animalScore_" + animal.id);
+
+    if (savedScore !== null) {
+        animal.score = Number(savedScore);
+    }
+});
     function generateAnimalCards() {
     const container = document.getElementById("dynamicPatients");
 
