@@ -657,24 +657,26 @@
         </div>
 
         <div class="choice-group">
+    <button onclick="selectChoice(this)">
+        Calme
+    </button>
 
-            <button onclick="selectChoice(this)">
-                Calme
-            </button>
+    <button onclick="selectChoice(this)">
+        Craintif
+    </button>
 
-            <button onclick="selectChoice(this)">
-                Craintif
-            </button>
+    <button onclick="selectChoice(this)">
+        Refuse de sortir
+    </button>
 
-            <button onclick="selectChoice(this)">
-                Refuse de sortir
-            </button>
+    <button onclick="selectChoice(this)">
+        Difficulté à se déplacer
+    </button>
 
-            <button onclick="selectChoice(this)">
-                Difficulté à se déplacer
-            </button>
-
-        </div>
+    <button onclick="selectChoice(this)">
+        Non concerné
+    </button>
+</div>
 
     </div>
 
@@ -695,19 +697,23 @@
 
         <div class="choice-group">
 
-            <button onclick="selectChoice(this)">
-                Oui
-            </button>
+    <button onclick="selectChoice(this)">
+        Oui
+    </button>
 
-            <button onclick="selectChoice(this)">
-                Partiellement
-            </button>
+    <button onclick="selectChoice(this)">
+        Partiellement
+    </button>
 
-            <button onclick="selectChoice(this)">
-                Non
-            </button>
+    <button onclick="selectChoice(this)">
+        Non
+    </button>
 
-        </div>
+    <button onclick="selectChoice(this)">
+        Non concerné
+    </button>
+
+</div>
 
     </div>
 
@@ -1042,11 +1048,18 @@ function updateAnimalScore() {
     if (selected.length === 0) return;
 
     let total = 0;
+    let count = 0;
 
     selected.forEach(button => {
 
         const value = button.textContent.trim();
 
+        // Non concerné : exclu du calcul
+        if (value === "Non concerné") {
+            return;
+        }
+
+        // Réponse positive
         if (
             value === "Calme" ||
             value === "Aucune" ||
@@ -1054,7 +1067,11 @@ function updateAnimalScore() {
             value === "Oui"
         ) {
             total += 100;
-        } else if (
+            count++;
+        }
+
+        // Réponse intermédiaire
+        else if (
             value === "Stressé" ||
             value === "Méfiant" ||
             value === "Debout" ||
@@ -1062,7 +1079,39 @@ function updateAnimalScore() {
             value === "Partiellement"
         ) {
             total += 50;
+            count++;
         }
+
+        // Réponse négative
+        else if (
+            value === "Très stressé" ||
+            value === "Agressif" ||
+            value === "Agité" ||
+            value === "Refuse de sortir" ||
+            value === "Difficulté à se déplacer" ||
+            value === "Non"
+        ) {
+            total += 0;
+            count++;
+        }
+    });
+
+    // Toutes les réponses sont "Non concerné"
+    if (count === 0) return;
+
+    animal.score = Math.round(total / count);
+
+    document.getElementById("patientScore").textContent =
+        animal.score + " %";
+
+    document.getElementById("patientCursor").style.left =
+        animal.score + "%";
+
+    localStorage.setItem(
+        "animalScore_" + animal.id,
+        animal.score
+    );
+}
     });
 
     animal.score = Math.round(total / selected.length);
