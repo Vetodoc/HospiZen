@@ -1179,6 +1179,44 @@ function renderSettingsPatients() {
 
 let editingPatientId = null;
 
+function editPatient(id) {
+
+    const animal = animals.find(
+        animal => animal.id === id
+    );
+
+    if (!animal) {
+        return;
+    }
+
+    editingPatientId = id;
+
+    const form =
+        document.getElementById("patientForm");
+
+    const title =
+        document.getElementById("patientFormTitle");
+
+    const nameInput =
+        document.getElementById("newPatientName");
+
+    const speciesInput =
+        document.getElementById("newPatientSpecies");
+
+    const cageInput =
+        document.getElementById("newPatientCage");
+
+    title.textContent = "Modifier " + animal.name;
+
+    nameInput.value = animal.name;
+    speciesInput.value = animal.species;
+    cageInput.value = animal.cage;
+
+    form.style.display = "block";
+
+    nameInput.focus();
+}
+
 
 function openPatientForm() {
 
@@ -1214,7 +1252,6 @@ function openPatientForm() {
     nameInput.focus();
 }
 
-
 function savePatient() {
 
     const nameInput =
@@ -1247,36 +1284,74 @@ function savePatient() {
         return;
     }
 
-    const newId =
-        animals.length > 0
-            ? Math.max(
-                ...animals.map(animal => animal.id)
-            ) + 1
-            : 1;
 
-    const newAnimal = {
+    /* MODIFICATION D'UN PATIENT EXISTANT */
 
-        id: newId,
-        name: name,
-        species: species,
+    if (editingPatientId !== null) {
 
-        emoji:
+        const animal = animals.find(
+            animal => animal.id === editingPatientId
+        );
+
+        if (!animal) {
+            return;
+        }
+
+        animal.name = name;
+        animal.species = species;
+        animal.cage = cage;
+
+        animal.emoji =
             species === "Chien"
                 ? "🐶"
                 : species === "Chat"
                     ? "🐱"
-                    : "🐰",
+                    : "🐰";
 
-        cage: cage,
-        score: 0
-    };
+    }
 
-    animals.push(newAnimal);
+
+    /* AJOUT D'UN NOUVEAU PATIENT */
+
+    else {
+
+        const newId =
+            animals.length > 0
+                ? Math.max(
+                    ...animals.map(animal => animal.id)
+                ) + 1
+                : 1;
+
+        const newAnimal = {
+            id: newId,
+            name: name,
+            species: species,
+
+            emoji:
+                species === "Chien"
+                    ? "🐶"
+                    : species === "Chat"
+                        ? "🐱"
+                        : "🐰",
+
+            cage: cage,
+            score: 0
+        };
+
+        animals.push(newAnimal);
+
+    }
+
+
+    /* SAUVEGARDE */
 
     localStorage.setItem(
         "hospiZenAnimals",
         JSON.stringify(animals)
     );
+
+
+    /* ACTUALISATION DE L'INTERFACE */
 
     generateAnimalCards();
 
@@ -1288,7 +1363,6 @@ function savePatient() {
 
     alert("Patient enregistré.");
 }
-
 
 function closePatientForm() {
 
