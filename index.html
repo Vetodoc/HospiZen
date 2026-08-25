@@ -1012,10 +1012,7 @@ const animals = [
         score: 0
     }
 ];
-    }
-];
-
-
+    
 function loadSavedAnimals() {
 
     const savedAnimals =
@@ -1030,7 +1027,7 @@ function loadSavedAnimals() {
         const parsedAnimals =
             JSON.parse(savedAnimals);
 
-        if (Array.isArray(parsedAnimals)) {
+       if (Array.isArray(parsedAnimals) && parsedAnimals.length > 0) {
 
             animals.length = 0;
 
