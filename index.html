@@ -45,9 +45,9 @@
     Historique
 </a>
 
-            <a href="#" class="nav-item">
-                <span>⚙</span>
-                Paramètres
+            <a href="#" class="nav-item" onclick="showSettings(); return false;">
+    <span>⚙</span>
+    Paramètres
             </a>
         </nav>
 
@@ -789,6 +789,168 @@
 
     <div id="historyList" class="planning-list"></div>
 </section>
+        <!-- =========================
+     PARAMÈTRES / PATIENTS
+========================== -->
+
+<section id="settingsView" style="display:none;">
+
+    <header class="header">
+
+        <div>
+            <p class="eyebrow">PARAMÈTRES</p>
+
+            <h1>Gestion des patients</h1>
+
+            <p class="subtitle">
+                Ajoutez et modifiez les animaux hospitalisés.
+            </p>
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                class="add-button"
+                onclick="openPatientForm()"
+            >
+                + Ajouter un patient
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- FORMULAIRE -->
+
+    <div
+        id="patientForm"
+        class="patient-detail-card"
+        style="display:none; margin-bottom:25px;"
+    >
+
+        <div class="detail-title">
+            <span id="patientFormTitle">
+                Ajouter un patient
+            </span>
+        </div>
+
+
+        <div style="
+            display:grid;
+            grid-template-columns:repeat(3, 1fr);
+            gap:20px;
+            margin-top:20px;
+        ">
+
+            <div>
+                <label
+                    for="newPatientName"
+                    style="display:block; margin-bottom:8px; font-weight:600;"
+                >
+                    Nom
+                </label>
+
+                <input
+                    id="newPatientName"
+                    type="text"
+                    placeholder="Ex. Médor"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #ddd;
+                        border-radius:10px;
+                        box-sizing:border-box;
+                    "
+                >
+            </div>
+
+
+            <div>
+                <label
+                    for="newPatientSpecies"
+                    style="display:block; margin-bottom:8px; font-weight:600;"
+                >
+                    Espèce
+                </label>
+
+                <select
+                    id="newPatientSpecies"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #ddd;
+                        border-radius:10px;
+                        box-sizing:border-box;
+                    "
+                >
+                    <option value="Chien">Chien</option>
+                    <option value="Chat">Chat</option>
+                    <option value="Lapin">Lapin</option>
+                </select>
+            </div>
+
+
+            <div>
+                <label
+                    for="newPatientCage"
+                    style="display:block; margin-bottom:8px; font-weight:600;"
+                >
+                    Cage
+                </label>
+
+                <input
+                    id="newPatientCage"
+                    type="text"
+                    placeholder="Ex. D1"
+                    style="
+                        width:100%;
+                        padding:12px;
+                        border:1px solid #ddd;
+                        border-radius:10px;
+                        box-sizing:border-box;
+                    "
+                >
+            </div>
+
+        </div>
+
+
+        <div
+            style="
+                display:flex;
+                gap:12px;
+                margin-top:20px;
+            "
+        >
+
+            <button
+                class="add-button"
+                onclick="savePatient()"
+            >
+                Enregistrer
+            </button>
+
+            <button
+                class="filter-button"
+                onclick="closePatientForm()"
+            >
+                Annuler
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- LISTE DES PATIENTS -->
+
+    <div
+        id="settingsPatientsList"
+        class="planning-list"
+    ></div>
+
+</section>
     </main>
 
 
@@ -850,7 +1012,43 @@ const animals = [
         score: 0
     }
 ];
+    }
+];
 
+
+function loadSavedAnimals() {
+
+    const savedAnimals =
+        localStorage.getItem("hospiZenAnimals");
+
+    if (!savedAnimals) {
+        return;
+    }
+
+    try {
+
+        const parsedAnimals =
+            JSON.parse(savedAnimals);
+
+        if (Array.isArray(parsedAnimals)) {
+
+            animals.length = 0;
+
+            parsedAnimals.forEach(animal => {
+                animals.push(animal);
+            });
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Impossible de charger les patients sauvegardés.",
+            error
+        );
+
+    }
+}
 
 /* =========================================================
    OUTILS
@@ -863,7 +1061,8 @@ function hideAllViews() {
         "environmentView",
         "behaviorView",
         "planningView",
-        "historyView"
+        "historyView",
+        "settingsView"
     ];
 
     views.forEach(id => {
@@ -882,8 +1081,229 @@ function scrollToTop() {
         behavior: "smooth"
     });
 }
+function showSettings() {
+
+    hideAllViews();
+
+    const settingsView =
+        document.getElementById("settingsView");
+
+    if (settingsView) {
+        settingsView.style.display = "block";
+    }
+    renderSettingsPatients();
+
+    scrollToTop();
+}
+function renderSettingsPatients() {
+
+    const container =
+        document.getElementById("settingsPatientsList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = animals.map(animal => {
+
+        const animalClass =
+            animal.species === "Chien"
+                ? "dog"
+                : animal.species === "Chat"
+                    ? "cat"
+                    : "rabbit";
+
+        return `
+            <div
+                class="planning-item"
+                style="
+                    display:flex;
+                    align-items:center;
+                    justify-content:space-between;
+                    gap:20px;
+                "
+            >
+
+                <div
+                    style="
+                        display:flex;
+                        align-items:center;
+                        gap:15px;
+                    "
+                >
+
+                    <div class="animal-avatar ${animalClass}">
+                        ${animal.emoji}
+                    </div>
+
+                    <div class="planning-content">
+
+                        <strong>${animal.name}</strong>
+
+                        <span>
+                            ${animal.species} · Cage ${animal.cage}
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div
+                    style="
+                        display:flex;
+                        gap:10px;
+                    "
+                >
+
+                    <button
+                        class="filter-button"
+                        onclick="editPatient(${animal.id})"
+                    >
+                        ✏️ Modifier
+                    </button>
+
+                    <button
+                        class="filter-button"
+                        onclick="deletePatient(${animal.id})"
+                    >
+                        🗑️ Supprimer
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
+}
+    /* =========================================================
+   GESTION DES PATIENTS
+========================================================= */
+
+let editingPatientId = null;
 
 
+function openPatientForm() {
+
+    editingPatientId = null;
+
+    const form =
+        document.getElementById("patientForm");
+
+    const title =
+        document.getElementById("patientFormTitle");
+
+    const nameInput =
+        document.getElementById("newPatientName");
+
+    const speciesInput =
+        document.getElementById("newPatientSpecies");
+
+    const cageInput =
+        document.getElementById("newPatientCage");
+
+    if (!form) {
+        return;
+    }
+
+    title.textContent = "Ajouter un patient";
+
+    nameInput.value = "";
+    speciesInput.value = "Chien";
+    cageInput.value = "";
+
+    form.style.display = "block";
+
+    nameInput.focus();
+}
+
+
+function savePatient() {
+
+    const nameInput =
+        document.getElementById("newPatientName");
+
+    const speciesInput =
+        document.getElementById("newPatientSpecies");
+
+    const cageInput =
+        document.getElementById("newPatientCage");
+
+    const name =
+        nameInput.value.trim();
+
+    const species =
+        speciesInput.value;
+
+    const cage =
+        cageInput.value.trim();
+
+    if (!name) {
+        alert("Veuillez renseigner le nom de l'animal.");
+        nameInput.focus();
+        return;
+    }
+
+    if (!cage) {
+        alert("Veuillez renseigner le numéro de cage.");
+        cageInput.focus();
+        return;
+    }
+
+    const newId =
+        animals.length > 0
+            ? Math.max(
+                ...animals.map(animal => animal.id)
+            ) + 1
+            : 1;
+
+    const newAnimal = {
+
+        id: newId,
+        name: name,
+        species: species,
+
+        emoji:
+            species === "Chien"
+                ? "🐶"
+                : species === "Chat"
+                    ? "🐱"
+                    : "🐰",
+
+        cage: cage,
+        score: 0
+    };
+
+    animals.push(newAnimal);
+
+    localStorage.setItem(
+        "hospiZenAnimals",
+        JSON.stringify(animals)
+    );
+
+    generateAnimalCards();
+
+    generatePlanning();
+
+    renderSettingsPatients();
+
+    closePatientForm();
+
+    alert("Patient enregistré.");
+}
+
+
+function closePatientForm() {
+
+    const form =
+        document.getElementById("patientForm");
+
+    if (form) {
+        form.style.display = "none";
+    }
+
+    editingPatientId = null;
+}
 function loadSavedScores() {
     animals.forEach(animal => {
         const savedScore = localStorage.getItem(
@@ -1644,6 +2064,8 @@ function initializeSearch() {
 
 function initializeApp() {
 
+    loadSavedAnimals();
+    
     loadSavedScores();
 
     generateAnimalCards();
