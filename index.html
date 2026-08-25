@@ -793,9 +793,14 @@
 
 
 </div>
-    <script>
-        let currentAnimalId = null;
-        const animals = [
+<script>
+let currentAnimalId = null;
+
+/* =========================================================
+   DONNÉES DES ANIMAUX
+========================================================= */
+
+const animals = [
     {
         id: 1,
         name: "Animal 1",
@@ -845,28 +850,82 @@
         score: 0
     }
 ];
-        animals.forEach(animal => {
-    const savedScore = localStorage.getItem("animalScore_" + animal.id);
 
-    if (savedScore !== null) {
-        animal.score = Number(savedScore);
-    }
-});
-    function generateAnimalCards() {
+
+/* =========================================================
+   OUTILS
+========================================================= */
+
+function hideAllViews() {
+    const views = [
+        "homeView",
+        "patientView",
+        "environmentView",
+        "behaviorView",
+        "planningView",
+        "historyView"
+    ];
+
+    views.forEach(id => {
+        const view = document.getElementById(id);
+
+        if (view) {
+            view.style.display = "none";
+        }
+    });
+}
+
+
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+function loadSavedScores() {
+    animals.forEach(animal => {
+        const savedScore = localStorage.getItem(
+            "animalScore_" + animal.id
+        );
+
+        if (savedScore !== null) {
+            const parsedScore = Number(savedScore);
+
+            if (!Number.isNaN(parsedScore)) {
+                animal.score = parsedScore;
+            }
+        }
+    });
+}
+
+
+/* =========================================================
+   PATIENTS
+========================================================= */
+
+function generateAnimalCards() {
     const container = document.getElementById("dynamicPatients");
+
+    if (!container) {
+        return;
+    }
 
     container.innerHTML = animals.map(animal => {
 
         const animalClass =
-            animal.species === "Chien" ? "dog" :
-            animal.species === "Chat" ? "cat" :
-            "rabbit";
+            animal.species === "Chien"
+                ? "dog"
+                : animal.species === "Chat"
+                    ? "cat"
+                    : "rabbit";
 
         return `
             <article
                 class="patient-card"
                 data-name="${animal.name}"
-              onclick="showPatientById(${animal.id})"
+                onclick="showPatientById(${animal.id})"
             >
 
                 <div class="patient-info">
@@ -890,12 +949,10 @@
                     </div>
 
                     <div class="gauge">
-
                         <div
                             class="gauge-cursor"
                             style="left: ${animal.score}%"
                         ></div>
-
                     </div>
 
                     <div class="gauge-labels">
@@ -910,94 +967,286 @@
 
             </article>
         `;
+
     }).join("");
 }
 
-generateAnimalCards();
-            function generatePlanning() {
-        const container = document.getElementById("dynamicPlanning");
 
-        const actions = [
-            "Interaction avec l'animal",
-            "Promenade",
-            "Observation du comportement",
-            "Interaction avec l'animal",
-            "Soins",
-            "Observation générale"
-        ];
+/* =========================================================
+   NAVIGATION ACCUEIL
+========================================================= */
 
-        container.innerHTML = animals.map((animal, index) => {
-            return `
-                <div class="planning-item">
+function showHome() {
 
-                    <div class="planning-time">
-                        <strong>${String(9 + index).padStart(2, "0")}:00</strong>
-                    </div>
+    loadSavedScores();
 
-                    <div class="planning-content">
-                        <strong>${animal.name}</strong>
-                        <span>${actions[index % actions.length]}</span>
-                    </div>
+    hideAllViews();
 
-                    <button
-                        class="planning-status"
-                        onclick="togglePlanningStatus(this)"
-                    >
-                        À faire
-                    </button>
+    const homeView = document.getElementById("homeView");
 
-                </div>
-            `;
-        }).join("");
+    if (homeView) {
+        homeView.style.display = "block";
     }
 
-    generatePlanning();
+    generateAnimalCards();
+
+    const patientCount = document.getElementById("patientCount");
+
+    if (patientCount) {
+        patientCount.textContent = animals.length;
+    }
+
+    scrollToTop();
+}
+
+
+/* =========================================================
+   FICHE PATIENT
+========================================================= */
+
+function showPatientById(id) {
+
+    const animal = animals.find(
+        animal => animal.id === id
+    );
+
+    if (!animal) {
+        return;
+    }
+
+    currentAnimalId = id;
+
+    const savedScore = localStorage.getItem(
+        "animalScore_" + animal.id
+    );
+
+    if (savedScore !== null) {
+        const parsedScore = Number(savedScore);
+
+        if (!Number.isNaN(parsedScore)) {
+            animal.score = parsedScore;
+        }
+    }
+
+    hideAllViews();
+
+    const patientView = document.getElementById("patientView");
+
+    if (patientView) {
+        patientView.style.display = "block";
+    }
+
+    const patientName = document.getElementById("patientName");
+    const patientSpecies = document.getElementById("patientSpecies");
+    const patientCage = document.getElementById("patientCage");
+    const patientScore = document.getElementById("patientScore");
+    const patientEmoji = document.getElementById("patientEmoji");
+    const patientCursor = document.getElementById("patientCursor");
+
+    if (patientName) {
+        patientName.textContent = animal.name;
+    }
+
+    if (patientSpecies) {
+        patientSpecies.textContent = animal.species;
+    }
+
+    if (patientCage) {
+        patientCage.textContent = animal.cage;
+    }
+
+    if (patientScore) {
+        patientScore.textContent = animal.score + " %";
+    }
+
+    if (patientEmoji) {
+        patientEmoji.textContent = animal.emoji;
+    }
+
+    if (patientCursor) {
+        patientCursor.style.left = animal.score + "%";
+    }
+
+    scrollToTop();
+}
+
+
+/* =========================================================
+   COMPORTEMENT
+========================================================= */
+
 function showBehavior() {
 
-    document.getElementById("homeView").style.display = "none";
-    document.getElementById("patientView").style.display = "none";
-    document.getElementById("environmentView").style.display = "none";
-    document.getElementById("behaviorView").style.display = "block";
+    if (currentAnimalId === null) {
+        return;
+    }
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    hideAllViews();
+
+    const behaviorView = document.getElementById("behaviorView");
+
+    if (behaviorView) {
+        behaviorView.style.display = "block";
+    }
+
+    scrollToTop();
 }
 
 
 function backToPatient() {
 
-    document.getElementById("behaviorView").style.display = "none";
-    document.getElementById("patientView").style.display = "block";
+    if (currentAnimalId === null) {
+        showHome();
+        return;
+    }
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    showPatientById(currentAnimalId);
 }
 
 
 function selectChoice(button) {
 
+    if (!button) {
+        return;
+    }
+
     const group = button.parentElement;
+
+    if (!group) {
+        return;
+    }
 
     group.querySelectorAll("button").forEach(btn => {
         btn.classList.remove("selected");
     });
 
     button.classList.add("selected");
-        updateAnimalScore();
+
+    updateAnimalScore();
 }
 
 
-function toggleInteraction(button) {
+/* =========================================================
+   CALCUL DU SCORE
+========================================================= */
 
-    button.classList.toggle("completed");
+function updateAnimalScore() {
 
+    const animal = animals.find(
+        animal => animal.id === currentAnimalId
+    );
+
+    if (!animal) {
+        return;
+    }
+
+    const selected = document.querySelectorAll(
+        "#behaviorView .choice-group .selected"
+    );
+
+    if (selected.length === 0) {
+        return;
+    }
+
+    let total = 0;
+    let count = 0;
+
+    selected.forEach(button => {
+
+        const value = button.textContent.trim();
+
+        /*
+         * NON CONCERNÉ
+         * Ne rentre pas dans le calcul.
+         */
+        if (value === "Non concerné") {
+            return;
+        }
+
+        /*
+         * SCORE 100
+         */
+        if (
+            value === "Calme" ||
+            value === "Aucune" ||
+            value === "Couché et détendu" ||
+            value === "Oui"
+        ) {
+            total += 100;
+            count++;
+            return;
+        }
+
+        /*
+         * SCORE 50
+         */
+        if (
+            value === "Stressé" ||
+            value === "Méfiant" ||
+            value === "Debout" ||
+            value === "Craintif" ||
+            value === "Partiellement"
+        ) {
+            total += 50;
+            count++;
+            return;
+        }
+
+        /*
+         * SCORE 0
+         */
+        if (
+            value === "Très stressé" ||
+            value === "Agressif" ||
+            value === "Agité" ||
+            value === "Refuse de sortir" ||
+            value === "Difficulté à se déplacer" ||
+            value === "Non"
+        ) {
+            total += 0;
+            count++;
+        }
+
+    });
+
+    if (count === 0) {
+        return;
+    }
+
+    animal.score = Math.round(total / count);
+
+    const patientScore = document.getElementById("patientScore");
+    const patientCursor = document.getElementById("patientCursor");
+
+    if (patientScore) {
+        patientScore.textContent = animal.score + " %";
+    }
+
+    if (patientCursor) {
+        patientCursor.style.left = animal.score + "%";
+    }
+
+    localStorage.setItem(
+        "animalScore_" + animal.id,
+        animal.score
+    );
 }
+
+
+/* =========================================================
+   ENREGISTREMENT COMPORTEMENT
+========================================================= */
 
 function saveBehavior() {
+
+    const animal = animals.find(
+        animal => animal.id === currentAnimalId
+    );
+
+    if (!animal) {
+        alert("Aucun animal sélectionné.");
+        return;
+    }
 
     const selected = document.querySelectorAll(
         "#behaviorView .choice-group .selected"
@@ -1010,21 +1259,32 @@ function saveBehavior() {
 
     updateAnimalScore();
 
-    const animal = animals.find(a => a.id === currentAnimalId);
+    const observations = Array.from(selected).map(
+        button => button.textContent.trim()
+    );
 
     const evaluation = {
         animalId: animal.id,
         animalName: animal.name,
         score: animal.score,
-        observations: Array.from(selected).map(
-            button => button.textContent.trim()
-        ),
+        observations: observations,
         date: new Date().toLocaleString("fr-FR")
     };
 
-    const history = JSON.parse(
-        localStorage.getItem("evaluations") || "[]"
-    );
+    let history = [];
+
+    try {
+        history = JSON.parse(
+            localStorage.getItem("evaluations") || "[]"
+        );
+
+        if (!Array.isArray(history)) {
+            history = [];
+        }
+
+    } catch (error) {
+        history = [];
+    }
 
     history.unshift(evaluation);
 
@@ -1035,121 +1295,64 @@ function saveBehavior() {
 
     alert("Observation enregistrée.");
 }
-function updateAnimalScore() {
 
-    const animal = animals.find(a => a.id === currentAnimalId);
 
-    if (!animal) return;
+/* =========================================================
+   INTERACTION
+========================================================= */
 
-    const selected = document.querySelectorAll(
-        "#behaviorView .choice-group .selected"
-    );
+function toggleInteraction(button) {
 
-    if (selected.length === 0) return;
+    if (!button) {
+        return;
+    }
 
-    let total = 0;
-    let count = 0;
-
-    selected.forEach(button => {
-
-        const value = button.textContent.trim();
-
-        // Non concerné : exclu du calcul
-        if (value === "Non concerné") {
-            return;
-        }
-
-        // Réponse positive
-        if (
-            value === "Calme" ||
-            value === "Aucune" ||
-            value === "Couché et détendu" ||
-            value === "Oui"
-        ) {
-            total += 100;
-            count++;
-        }
-
-        // Réponse intermédiaire
-        else if (
-            value === "Stressé" ||
-            value === "Méfiant" ||
-            value === "Debout" ||
-            value === "Craintif" ||
-            value === "Partiellement"
-        ) {
-            total += 50;
-            count++;
-        }
-
-        // Réponse négative
-        else if (
-            value === "Très stressé" ||
-            value === "Agressif" ||
-            value === "Agité" ||
-            value === "Refuse de sortir" ||
-            value === "Difficulté à se déplacer" ||
-            value === "Non"
-        ) {
-            total += 0;
-            count++;
-        }
-    });
-
-    // Toutes les réponses sont "Non concerné"
-    if (count === 0) return;
-
-    animal.score = Math.round(total / count);
-
-    document.getElementById("patientScore").textContent =
-        animal.score + " %";
-
-    document.getElementById("patientCursor").style.left =
-        animal.score + "%";
-
-    localStorage.setItem(
-        "animalScore_" + animal.id,
-        animal.score
-    );
+    button.classList.toggle("completed");
 }
-    });
 
-    animal.score = Math.round(total / selected.length);
 
-    document.getElementById("patientScore").textContent =
-        animal.score + " %";
+/* =========================================================
+   ENVIRONNEMENT
+========================================================= */
 
-    document.getElementById("patientCursor").style.left =
-    animal.score + "%";
-
-localStorage.setItem(
-    "animalScore_" + animal.id,
-    animal.score
-);
-
-}
 function showEnvironment() {
 
-    document.getElementById("homeView").style.display = "none";
-    document.getElementById("patientView").style.display = "none";
-    document.getElementById("environmentView").style.display = "block";
+    if (currentAnimalId === null) {
+        return;
+    }
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    hideAllViews();
+
+    const environmentView =
+        document.getElementById("environmentView");
+
+    if (environmentView) {
+        environmentView.style.display = "block";
+    }
+
+    scrollToTop();
 }
 
 
 function setStatus(button, status) {
 
+    if (!button) {
+        return;
+    }
+
     const parent = button.parentElement;
 
+    if (!parent) {
+        return;
+    }
+
     parent.querySelectorAll("button").forEach(btn => {
+
         btn.classList.remove("selected");
         btn.classList.remove("status-ok");
         btn.classList.remove("status-warning");
         btn.classList.remove("status-na");
+
     });
 
     button.classList.add("selected");
@@ -1179,180 +1382,284 @@ function saveEnvironment() {
     ).length;
 
     if (selected.length === 0) {
-
         alert("Veuillez évaluer au moins un élément.");
-
         return;
     }
 
-    document.getElementById("environmentScore").textContent =
-        selected.length + " / " + total + " évalués";
+    const environmentScore =
+        document.getElementById("environmentScore");
+
+    if (environmentScore) {
+        environmentScore.textContent =
+            selected.length + " / " + total + " évalués";
+    }
 
     alert("Évaluation enregistrée.");
 }
-   function showPatientById(id) {
 
-    const animal = animals.find(a => a.id === id);
 
-    if (!animal) return;
-    const savedScore = localStorage.getItem("animalScore_" + animal.id);
+/* =========================================================
+   PLANNING
+========================================================= */
 
-    if (savedScore !== null) {
-        animal.score = Number(savedScore);
+function generatePlanning() {
+
+    const container =
+        document.getElementById("dynamicPlanning");
+
+    if (!container) {
+        return;
     }
-    currentAnimalId = id;
 
-    document.getElementById("homeView").style.display = "none";
-    document.getElementById("patientView").style.display = "block";
-    document.getElementById("environmentView").style.display = "none";
-    document.getElementById("behaviorView").style.display = "none";
+    const actions = [
+        "Interaction avec l'animal",
+        "Promenade",
+        "Observation du comportement",
+        "Interaction avec l'animal",
+        "Soins",
+        "Observation générale"
+    ];
 
-    document.getElementById("patientName").textContent = animal.name;
-    document.getElementById("patientSpecies").textContent = animal.species;
-    document.getElementById("patientCage").textContent = animal.cage;
-    document.getElementById("patientScore").textContent = animal.score + " %";
-    document.getElementById("patientEmoji").textContent = animal.emoji;
+    container.innerHTML = animals.map((animal, index) => {
 
-    document.getElementById("patientCursor").style.left = animal.score + "%";
+        const hour = String(9 + index).padStart(2, "0");
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+        return `
+            <div class="planning-item">
+
+                <div class="planning-time">
+                    <strong>${hour}:00</strong>
+                </div>
+
+                <div class="planning-content">
+                    <strong>${animal.name}</strong>
+                    <span>${actions[index % actions.length]}</span>
+                </div>
+
+                <button
+                    class="planning-status"
+                    onclick="togglePlanningStatus(this)"
+                >
+                    À faire
+                </button>
+
+            </div>
+        `;
+
+    }).join("");
 }
 
-    function showHome() {
 
-    animals.forEach(animal => {
-        const savedScore = localStorage.getItem("animalScore_" + animal.id);
-
-        if (savedScore !== null) {
-            animal.score = Number(savedScore);
-        }
-    });
-
-    document.getElementById("patientView").style.display = "none";
-    document.getElementById("homeView").style.display = "block";
-
-    generateAnimalCards();
-
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-
-    /* Recherche */
-
-    const searchInput = document.getElementById("searchInput");
-
-    searchInput.addEventListener("input", function () {
-
-        const search = this.value.toLowerCase();
-
-        const cards = document.querySelectorAll(".patient-card");
-
-        let visible = 0;
-
-        cards.forEach(card => {
-
-            const name = card.dataset.name.toLowerCase();
-
-            if (name.includes(search)) {
-
-                card.style.display = "grid";
-                visible++;
-
-            } else {
-
-                card.style.display = "none";
-
-            }
-
-        });
-
-        document.getElementById("patientCount").textContent = visible;
-
-    });
 function showPlanning() {
 
-    document.getElementById("homeView").style.display = "none";
-    document.getElementById("patientView").style.display = "none";
-    document.getElementById("environmentView").style.display = "none";
-    document.getElementById("behaviorView").style.display = "none";
+    hideAllViews();
 
-    document.getElementById("planningView").style.display = "block";
+    const planningView =
+        document.getElementById("planningView");
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+    if (planningView) {
+        planningView.style.display = "block";
+    }
+
+    scrollToTop();
 }
-        function renderHistory() {
-    const historyList = document.getElementById("historyList");
 
-    const history = JSON.parse(
-        localStorage.getItem("evaluations") || "[]"
-    );
+
+function togglePlanningStatus(button) {
+
+    if (!button) {
+        return;
+    }
+
+    if (button.textContent.trim() === "À faire") {
+
+        button.textContent = "✓ Terminé";
+        button.classList.add("completed");
+
+    } else {
+
+        button.textContent = "À faire";
+        button.classList.remove("completed");
+
+    }
+}
+
+
+/* =========================================================
+   HISTORIQUE
+========================================================= */
+
+function renderHistory() {
+
+    const historyList =
+        document.getElementById("historyList");
+
+    if (!historyList) {
+        return;
+    }
+
+    let history = [];
+
+    try {
+
+        history = JSON.parse(
+            localStorage.getItem("evaluations") || "[]"
+        );
+
+        if (!Array.isArray(history)) {
+            history = [];
+        }
+
+    } catch (error) {
+
+        history = [];
+
+    }
 
     if (history.length === 0) {
+
         historyList.innerHTML = `
             <div class="planning-item">
+
                 <div class="planning-content">
-                    <strong>Aucune évaluation enregistrée</strong>
+
+                    <strong>
+                        Aucune évaluation enregistrée
+                    </strong>
+
                     <span>
                         Les évaluations réalisées apparaîtront ici.
                     </span>
+
                 </div>
+
             </div>
         `;
+
         return;
     }
 
     historyList.innerHTML = "";
 
     history.forEach(evaluation => {
+
         const item = document.createElement("div");
+
         item.className = "planning-item";
 
         item.innerHTML = `
             <div class="planning-content">
-                <strong>${evaluation.animalName}</strong>
+
+                <strong>
+                    ${evaluation.animalName}
+                </strong>
+
                 <span>
                     Score : ${evaluation.score}%<br>
                     Date : ${evaluation.date}
                 </span>
+
             </div>
         `;
 
         historyList.appendChild(item);
     });
 }
-        function showHistory() {
-    document.getElementById("homeView").style.display = "none";
-    document.getElementById("patientView").style.display = "none";
-    document.getElementById("environmentView").style.display = "none";
-    document.getElementById("behaviorView").style.display = "none";
-    document.getElementById("planningView").style.display = "none";
 
-    document.getElementById("historyView").style.display = "block";
-            renderHistory();
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-}
-function togglePlanningStatus(button) {
+function showHistory() {
 
-    if (button.textContent.trim() === "À faire") {
-        button.textContent = "✓ Terminé";
-        button.classList.add("completed");
-    } else {
-        button.textContent = "À faire";
-        button.classList.remove("completed");
+    hideAllViews();
+
+    const historyView =
+        document.getElementById("historyView");
+
+    if (historyView) {
+        historyView.style.display = "block";
     }
+
+    renderHistory();
+
+    scrollToTop();
 }
-    </script>
+
+
+/* =========================================================
+   RECHERCHE
+========================================================= */
+
+function initializeSearch() {
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    if (!searchInput) {
+        return;
+    }
+
+    searchInput.addEventListener(
+        "input",
+        function () {
+
+            const search =
+                this.value.toLowerCase().trim();
+
+            const cards =
+                document.querySelectorAll(".patient-card");
+
+            let visible = 0;
+
+            cards.forEach(card => {
+
+                const name =
+                    (card.dataset.name || "").toLowerCase();
+
+                if (name.includes(search)) {
+
+                    card.style.display = "grid";
+                    visible++;
+
+                } else {
+
+                    card.style.display = "none";
+
+                }
+
+            });
+
+            const patientCount =
+                document.getElementById("patientCount");
+
+            if (patientCount) {
+                patientCount.textContent = visible;
+            }
+        }
+    );
+}
+
+
+/* =========================================================
+   INITIALISATION
+========================================================= */
+
+function initializeApp() {
+
+    loadSavedScores();
+
+    generateAnimalCards();
+
+    generatePlanning();
+
+    initializeSearch();
+}
+
+
+/* =========================================================
+   LANCEMENT
+========================================================= */
+
+initializeApp();
+
+</script>
 </body>
 </html>
