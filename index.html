@@ -680,7 +680,13 @@
         Non concerné
     </button>
 </div>
-
+<button
+    class="filter-button"
+    onclick="recordDogOuting()"
+    style="margin-top:15px;"
+>
+    🐾 Sortie effectuée
+</button>
     </div>
 
 
@@ -982,8 +988,14 @@ let currentAnimalId = null;
 /* =========================================================
    DONNÉES DES ANIMAUX
 ========================================================= */
-
+const dogOutingTimes = [
+    "08:00",
+    "12:30",
+    "14:20",
+    "18:30"
+];
 const animals = [
+
     {
         id: 1,
         name: "LOUNA",
@@ -1080,7 +1092,8 @@ function hideAllViews() {
         "behaviorView",
         "planningView",
         "historyView",
-        "settingsView"
+        "settingsView",
+        "alertsView"
     ];
 
     views.forEach(id => {
@@ -1402,6 +1415,10 @@ function loadSavedScores() {
             "animalScore_" + animal.id
         );
 
+        const savedScoreUpdatedAt = localStorage.getItem(
+            "animalScoreUpdatedAt_" + animal.id
+        );
+
         if (savedScore !== null) {
             const parsedScore = Number(savedScore);
 
@@ -1409,9 +1426,16 @@ function loadSavedScores() {
                 animal.score = parsedScore;
             }
         }
+
+        if (savedScoreUpdatedAt !== null) {
+            const parsedDate = Number(savedScoreUpdatedAt);
+
+            if (!Number.isNaN(parsedDate)) {
+                animal.scoreUpdatedAt = parsedDate;
+            }
+        }
     });
 }
-
 
 /* =========================================================
    PATIENTS
@@ -1726,6 +1750,7 @@ function updateAnimalScore() {
     }
 
     animal.score = Math.round(total / count);
+    animal.scoreUpdatedAt = Date.now();
 
     const patientScore = document.getElementById("patientScore");
     const patientCursor = document.getElementById("patientCursor");
@@ -1738,10 +1763,16 @@ function updateAnimalScore() {
         patientCursor.style.left = animal.score + "%";
     }
 
-    localStorage.setItem(
-        "animalScore_" + animal.id,
-        animal.score
-    );
+   localStorage.setItem(
+    "animalScore_" + animal.id,
+    animal.score
+);
+
+localStorage.setItem(
+    "animalScoreUpdatedAt_" + animal.id,
+    animal.scoreUpdatedAt
+);
+    
 }
 
 
@@ -1821,7 +1852,23 @@ function toggleInteraction(button) {
 
     button.classList.toggle("completed");
 }
+function recordDogOuting() {
 
+    const animal = animals.find(
+        animal => animal.id === currentAnimalId
+    );
+
+    if (!animal || animal.species !== "Chien") {
+        return;
+    }
+
+    localStorage.setItem(
+        "dogLastOut_" + animal.id,
+        Date.now()
+    );
+
+    alert("Sortie enregistrée pour " + animal.name + ".");
+}
 
 /* =========================================================
    ENVIRONNEMENT
@@ -2093,6 +2140,146 @@ function showHistory() {
     renderHistory();
 
     scrollToTop();
+    
+}
+    function showAlerts() {
+
+    hideAllViews();
+
+    const alertsView =
+        document.getElementById("alertsView");
+
+    if (alertsView) {
+        alertsView.style.display = "block";
+    }
+    renderAlerts();
+    scrollToTop();
+}
+  function renderAlerts() {
+
+    const alertsList =
+        document.getElementById("alertsList");
+
+    if (!alertsList) {
+        return;
+    }
+
+    const alerts = [];
+    const now = new Date();
+
+    animals.forEach(animal => {
+
+        /* ALERTE BIEN-ÊTRE */
+
+        if (
+            animal.score < 30 &&
+            animal.scoreUpdatedAt &&
+            Date.now() - animal.scoreUpdatedAt >= 30 * 60 * 1000
+        ) {
+            alerts.push(
+                "⚠️ " + animal.name +
+                " : bien-être à réévaluer"
+            );
+        }
+
+
+        /* ALERTE SORTIE CHIEN */
+
+        if (animal.species === "Chien") {
+
+            const currentMinutes =
+                now.getHours() * 60 + now.getMinutes();
+
+            let lastScheduledMinutes = null;
+
+            dogOutingTimes.forEach(time => {
+
+                const parts = time.split(":");
+                const hours = Number(parts[0]);
+                const minutes = Number(parts[1]);
+
+                const scheduledMinutes =
+                    hours * 60 + minutes;
+
+                if (
+                    scheduledMinutes <= currentMinutes &&
+                    (
+                        lastScheduledMinutes === null ||
+                        scheduledMinutes > lastScheduledMinutes
+                    )
+                ) {
+                    lastScheduledMinutes = scheduledMinutes;
+                }
+            });
+
+            if (lastScheduledMinutes !== null) {
+
+                const todayScheduled = new Date();
+
+                todayScheduled.setHours(
+                    Math.floor(lastScheduledMinutes / 60),
+                    lastScheduledMinutes % 60,
+                    0,
+                    0
+                );
+
+                const lastOuting = Number(
+                    localStorage.getItem(
+                        "dogLastOut_" + animal.id
+                    )
+                );
+
+                if (
+                    !lastOuting ||
+                    lastOuting < todayScheduled.getTime()
+                ) {
+                    alerts.push(
+                        "🐾 " + animal.name +
+                        " : sortie à effectuer"
+                    );
+                }
+            }
+        }
+    });
+
+
+    /* COMPTEUR */
+
+    const alertCount =
+        document.getElementById("alertCount");
+
+    if (alertCount) {
+        alertCount.textContent = alerts.length;
+    }
+
+
+    /* AFFICHAGE */
+
+    if (alerts.length === 0) {
+        alertsList.innerHTML =
+            "<p>Aucune alerte pour le moment.</p>";
+        return;
+    }
+
+    alertsList.innerHTML = alerts
+        .map(alert => "<p>" + alert + "</p>")
+        .join("");
+}
+const alertCount =
+    document.getElementById("alertCount");
+
+if (alertCount) {
+    alertCount.textContent = alerts.length;
+}
+    if (alerts.length === 0) {
+        alertsList.innerHTML =
+            "<p>Aucune alerte pour le moment.</p>";
+        return;
+    }
+
+    alertsList.innerHTML = alerts
+        .map(alert => "<p>" + alert + "</p>")
+        .join("");
 }
 
 
@@ -2165,6 +2352,8 @@ function initializeApp() {
     generatePlanning();
 
     initializeSearch();
+
+        renderAlerts();
 }
 
 
