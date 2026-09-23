@@ -2265,23 +2265,6 @@ function showHistory() {
         .map(alert => "<p>" + alert + "</p>")
         .join("");
 }
-const alertCount =
-    document.getElementById("alertCount");
-
-if (alertCount) {
-    alertCount.textContent = alerts.length;
-}
-    if (alerts.length === 0) {
-        alertsList.innerHTML =
-            "<p>Aucune alerte pour le moment.</p>";
-        return;
-    }
-
-    alertsList.innerHTML = alerts
-        .map(alert => "<p>" + alert + "</p>")
-        .join("");
-}
-
 
 /* =========================================================
    RECHERCHE
